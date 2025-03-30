@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:nafsia/core/helper_functions/extentions.dart';
+import 'package:nafsia/core/helper_functions/rouutes.dart';
 import 'package:nafsia/core/utils/app_colors.dart';
 import 'package:nafsia/core/utils/app_images.dart';
 import 'package:nafsia/core/utils/app_text_styles.dart';
@@ -42,8 +44,11 @@ class LoginViewBody extends StatelessWidget {
               ),
             ),
             verticalSpace(16),
-            const CustomButton(
+             CustomButton(
               text: 'تسجيل الدخول',
+              onPressed: (){
+                context.pushNamed(Routes.mainView);
+              },
             ),
             verticalSpace(16),
             const DontHaveAnAccount(),
