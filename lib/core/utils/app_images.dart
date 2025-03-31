@@ -54,6 +54,14 @@ class Assets {
   /// assets/images/nafsia_logo.jpg
   static const String assetsImagesNafsiaLogo = "assets/images/nafsia_logo.jpg";
 
+  /// Assets for assetsImagesPostTestImage
+  /// assets/images/post_test_image.jpg
+  static const String assetsImagesPostTestImage = "assets/images/post_test_image.jpg";
+
+  /// Assets for assetsImagesProfileTestImage
+  /// assets/images/profile_test_image.png
+  static const String assetsImagesProfileTestImage = "assets/images/profile_test_image.png";
+
   /// Assets for assetsImagesSadEmoji
   /// assets/images/sad_emoji.png
   static const String assetsImagesSadEmoji = "assets/images/sad_emoji.png";
