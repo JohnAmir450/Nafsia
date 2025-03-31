@@ -84,7 +84,7 @@ class MoodListItem extends StatelessWidget {
             onPressed: () {
                 onDelete(); 
               context.pop();
-              context.pop();
+            
             },
             child: const Text("حذف", style: TextStyle(color: Colors.red)),
           ),
