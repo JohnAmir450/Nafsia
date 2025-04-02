@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nafsia/features/home/presentation/views/chats_view.dart';
 import 'package:nafsia/features/home/presentation/views/home_view.dart';
 import 'package:nafsia/features/home/presentation/views/widgets/custom_buttom_navigation_bar.dart';
 
@@ -19,16 +20,18 @@ class _MainViewState extends State<MainView> {
   }
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
-      bottomNavigationBar: CustomButtonNavigationBar(onItemTapped: _onItemTapped,selectedIndex: selectedIndex,),
-      body: IndexedStack(
-        index: selectedIndex,
-        children: [
-         HomeView(),
-          Center(child: Text('Search'),),
-          Center(child: Text('Notifications'),),
-          Center(child: Text('Profile'),),
-        ],
+    return  SafeArea(
+      child: Scaffold(
+        bottomNavigationBar: CustomButtonNavigationBar(onItemTapped: _onItemTapped,selectedIndex: selectedIndex,),
+        body: IndexedStack(
+          index: selectedIndex,
+          children: const[
+           HomeView(),
+            ChatsView(),
+            Center(child: Text('Notifications'),),
+            Center(child: Text('Profile'),),
+          ],
+        ),
       ),
     );
   }

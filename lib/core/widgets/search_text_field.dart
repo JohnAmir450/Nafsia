@@ -19,7 +19,7 @@ final TextEditingController? controller;
       //  suffixIcon:SvgPicture.asset(Assets.assetsImagesFilter,fit: BoxFit.none,),
         suffixIconColor: const Color(0xff949D9E),
         prefixIcon: const Icon(Icons.search,size: 40,color: AppColors.primaryColor),
-        hintText: 'ابحث عن…',
+        hintText: 'ابحث عن اخصائي…',
         hintStyle: TextStyles.regular16.copyWith(color: const Color(0xff949D9E)),
         filled: true,
         fillColor: const Color(0xffF9FAFA),

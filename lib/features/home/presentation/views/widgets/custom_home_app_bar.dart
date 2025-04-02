@@ -26,7 +26,8 @@ class CustomHomeAppBar extends StatelessWidget {
               borderRadius: BorderRadius.circular(16)
             ),
             child: Text('كيف تشعر اليوم ؟ 😀',style: TextStyles.bold13,)),
-        )
+        ),
+        IconButton(onPressed: (){}, icon: const Icon(Icons.notifications_rounded),color: AppColors.primaryColor,)
           
       ],
     );

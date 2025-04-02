@@ -33,16 +33,19 @@ void _showMoodHistoryModal(BuildContext context) {
             padding: const EdgeInsets.all(16.0),
             child: notes.isEmpty
                 ? const EmptyMoodsList()
-                : ListView.separated(
+                : ListView.builder(
                     shrinkWrap: true,
                     itemCount: notes.length,
-                    separatorBuilder: (context, index) =>
-                        const Divider(endIndent: 18, indent: 18),
                     itemBuilder: (context, index) {
                       final reversedNotes = notes.reversed.toList();
-                      return MoodListItem(moodItem: reversedNotes[index],onDelete: () {
-                        context.read<MoodCubit>().deleteMood(reversedNotes[index]);
-                      },);
+                      return MoodListItem(
+                        moodItem: reversedNotes[index],
+                        onDelete: () {
+                          context
+                              .read<MoodCubit>()
+                              .deleteMood(reversedNotes[index]);
+                        },
+                      );
                     },
                   ),
           );
