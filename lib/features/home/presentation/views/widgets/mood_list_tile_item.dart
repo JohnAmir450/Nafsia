@@ -13,45 +13,48 @@ class MoodListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 3,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      child: Slidable(
-        key: ValueKey(moodItem.date), // ✅ Ensures correct item deletion
-        endActionPane: ActionPane(
-          motion: const DrawerMotion(), // ✅ Smooth slide effect
-          children: [
-            SlidableAction(
-              onPressed: (context) => _confirmDelete(context),
-              backgroundColor: Colors.red,
-              foregroundColor: Colors.white,
-              icon: Icons.delete,
-              label: 'حذف',
-            ),
-          ],
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4.0),
+      child: Card(
+        elevation: 3,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        child: Slidable(
+          key: ValueKey(moodItem.date), // ✅ Ensures correct item deletion
+          endActionPane: ActionPane(
+            motion: const DrawerMotion(), // ✅ Smooth slide effect
             children: [
-              _buildListTile(
-                icon: moodItem.selectedMood == "سعيد" ? Icons.mood : Icons.mood_bad,
-                iconColor: moodItem.selectedMood == "سعيد" ? Colors.blue : Colors.red,
-                title: 'الحالة: ${moodItem.selectedMood}',
+              SlidableAction(
+                onPressed: (context) => _confirmDelete(context),
+                backgroundColor: Colors.red,
+                foregroundColor: Colors.white,
+                icon: Icons.delete,
+                label: 'حذف',
               ),
-              _buildListTile(
-                icon: Icons.calendar_today,
-                iconColor: Colors.green,
-                title: 'التاريخ: ${formatDateFromDateTime(moodItem.date)}',
-              ),
-              if (moodItem.notes.isNotEmpty)
-                _buildListTile(
-                  icon: Icons.note,
-                  iconColor: Colors.orange,
-                  title: 'الملاحظات: ${moodItem.notes}',
-                ),
             ],
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _buildListTile(
+                  icon: moodItem.selectedMood == "سعيد" ? Icons.mood : Icons.mood_bad,
+                  iconColor: moodItem.selectedMood == "سعيد" ? Colors.blue : Colors.red,
+                  title: 'الحالة: ${moodItem.selectedMood}',
+                ),
+                _buildListTile(
+                  icon: Icons.calendar_today,
+                  iconColor: Colors.green,
+                  title: 'التاريخ: ${formatDateFromDateTime(moodItem.date)}',
+                ),
+                if (moodItem.notes.isNotEmpty)
+                  _buildListTile(
+                    icon: Icons.note,
+                    iconColor: Colors.orange,
+                    title: 'الملاحظات: ${moodItem.notes}',
+                  ),
+              ],
+            ),
           ),
         ),
       ),
