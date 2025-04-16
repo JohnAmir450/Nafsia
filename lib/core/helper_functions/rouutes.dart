@@ -7,6 +7,8 @@ class Routes{
   static const homeView = '/homeView';
   static const modeSelectionView = '/modeSelectionView';
   static const chatsView = '/chatsView';
-   static const doctorsView='/doctorsView';
+  static const doctorsView='/doctorsView';
+  static const groupChatsView='/groupChatsView';
+  static const moreView='/moreView';
   static const userProfileView='/userProfileView';
 }
