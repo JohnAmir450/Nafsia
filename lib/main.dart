@@ -3,8 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive_flutter/adapters.dart';
+import 'package:nafsia/core/helper_functions/cache_helper.dart';
 import 'package:nafsia/core/helper_functions/on_generate_routes.dart';
 import 'package:nafsia/core/helper_functions/rouutes.dart';
+import 'package:nafsia/core/services/get_it_service.dart';
 import 'package:nafsia/core/utils/app_colors.dart';
 import 'package:nafsia/core/utils/bloc_observer.dart';
 import 'package:nafsia/core/utils/constants.dart';
@@ -14,8 +16,10 @@ import 'package:nafsia/generated/l10n.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Bloc.observer = MyBlocObserver();
+  await CacheHelper.init();
   await Hive.initFlutter();
   Hive.registerAdapter(MoodModelAdapter());
+  setupGetIt();
   await Hive.openBox<MoodModel>(kMoodBox);
 
   runApp(const MyApp());
@@ -56,7 +60,7 @@ class MyApp extends StatelessWidget {
         locale: const Locale('ar'),
         debugShowCheckedModeBanner: false,
         onGenerateRoute: onGenerateRoutes,
-        initialRoute: Routes.mainView,
+        initialRoute: Routes.loginView,
       ),
     );
   }

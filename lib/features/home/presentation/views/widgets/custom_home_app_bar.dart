@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nafsia/core/helper_functions/extentions.dart';
+import 'package:nafsia/core/helper_functions/get_user_data.dart';
 import 'package:nafsia/core/helper_functions/rouutes.dart';
 import 'package:nafsia/core/utils/app_colors.dart';
 import 'package:nafsia/core/utils/app_text_styles.dart';
@@ -13,7 +14,7 @@ class CustomHomeAppBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Text('اهلًا بك مريم 👋',style: TextStyles.bold16.copyWith(color: AppColors.primaryColor),),
+        Text('اهلًا بك ${getUserData().user.name} 👋',style: TextStyles.bold16.copyWith(color: AppColors.primaryColor),),
         const Spacer(),
         GestureDetector(
           onTap: (){
