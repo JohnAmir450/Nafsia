@@ -77,4 +77,46 @@ class AuthRepoImplementation implements AuthRepo {
 
     await CacheHelper.saveData(key: kSaveUserDataKey, value: userData);
   }
+  
+  @override
+  Future<Either<Failure, void>> forgetPassword({required String email}) async{
+      try {
+    await apiConsumer.post(ApiEndpoints.forgetPassword, data: {'email': email});
+    return right(null);
+  } on ServerException catch (e) {
+    return left(CustomFailure(message: e.errorModel.errorMessage));
+  }
+  }
+  @override
+Future<Either<Failure, void>> verifyOtp({
+  required String email,
+  required String otp,
+}) async {
+  try {
+    await apiConsumer.post(ApiEndpoints.verifyOtp, data: {
+      'email': email,
+      'otp': otp,
+    });
+    return right(null);
+  } on ServerException catch (e) {
+    return left(CustomFailure(message: e.errorModel.errorMessage));
+  }
+}
+@override
+Future<Either<Failure, void>> resetPassword({
+  required String otp,
+  required String newPassword,
+}) async {
+  try {
+    await apiConsumer.post(ApiEndpoints.resetPassword, data: {
+      'otp': otp,
+      'password': newPassword,
+    });
+    return right(null);
+  } on ServerException catch (e) {
+    return left(CustomFailure(message: e.errorModel.errorMessage));
+  }
+}
+
+
 }

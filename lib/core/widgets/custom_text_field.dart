@@ -16,6 +16,7 @@ class CustomTextFormField extends StatelessWidget {
   final String? labelText;
   final String? initialValue;
   final double? borderRadius;
+  final TextAlign? textAlign;
   final bool  readOnly;
   final void Function(String?)? onSaved;
   const CustomTextFormField({
@@ -30,6 +31,7 @@ class CustomTextFormField extends StatelessWidget {
     this.suffixIcon,
     this.onChanged,
     this.controller,
+    this.textAlign,
     this.isObscured,
     this.maxLines = 1,
     this.contentPadding,
@@ -46,6 +48,7 @@ class CustomTextFormField extends StatelessWidget {
       initialValue: initialValue,
       onSaved:onSaved ,
       readOnly: readOnly,
+      textAlign: textAlign ?? TextAlign.start,
       obscureText: isObscured ?? false,
       onChanged: onChanged,
       validator:needsValidation? validator ?? (value) {

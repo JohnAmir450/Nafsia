@@ -77,10 +77,13 @@ class LoginViewBody extends StatelessWidget {
                     verticalSpace(16),
                     Align(
                       alignment: AlignmentDirectional.centerStart,
-                      child: Text(
-                        'نسيت كلمة المرور ؟ ',
-                        style: TextStyles.bold16
-                            .copyWith(color: AppColors.secondaryColor),
+                      child: GestureDetector(
+                        onTap: () => context.pushNamed(Routes.forgetPasswordView),
+                        child: Text(
+                          'نسيت كلمة المرور ؟ ',
+                          style: TextStyles.bold16
+                              .copyWith(color: AppColors.secondaryColor),
+                        ),
                       ),
                     ),
                     verticalSpace(16),
