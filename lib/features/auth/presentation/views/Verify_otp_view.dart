@@ -5,11 +5,11 @@ import 'package:nafsia/core/services/get_it_service.dart';
 import 'package:nafsia/core/widgets/custom_app_bar.dart';
 import 'package:nafsia/features/auth/data/forget_password_cubit/forget_password_cubit.dart';
 import 'package:nafsia/features/auth/logic/repos/auth_repo.dart';
-import 'package:nafsia/features/auth/presentation/views/widgets/reset_password_view_body.dart';
+import 'package:nafsia/features/auth/presentation/views/widgets/verify_otp_view_body.dart';
 
-class ResetPasswordView extends StatelessWidget {
-  final String otp;
-  const ResetPasswordView({super.key, required this.otp});
+class VerifyOtpView extends StatelessWidget {
+  final String email;
+  const VerifyOtpView({super.key, required this.email});
 
   @override
   Widget build(BuildContext context) {
@@ -17,10 +17,12 @@ class ResetPasswordView extends StatelessWidget {
       create: (_) => ForgetPasswordCubit(getIt<AuthRepo>()),
       child: Scaffold(
         appBar: buildAppBar(context,
-            title: 'كلمة مرور جديدة', onTap: () => context.pop()),
-        body: ResetPasswordViewBody(otp: otp),
+            title: 'التحقق من الرمز', onTap: () => context.pop()),
+        body: VerifyOtpViewBody(email: email),
       ),
     );
   }
 }
+
+
 

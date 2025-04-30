@@ -1,6 +1,8 @@
 class Routes{
   static const onBoardingView = '/onBoardingView';
   static const loginView = '/loginView';
+  static const forgetPasswordView = '/forgetPasswordView';
+   static const verifyOtpView = '/verifyOtpView';
   static const resetPasswordView = '/resetPasswordView';
   static const signUpView = '/signUpView';
   static const mainView = '/mainView';
