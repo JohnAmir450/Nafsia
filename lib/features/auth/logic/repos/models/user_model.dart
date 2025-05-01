@@ -46,6 +46,7 @@ class UserDataModel {
   final String name;
   final String email;
   final String phone;
+  final String id;
   final String gender;
   final int age;
   final String role;
@@ -56,6 +57,7 @@ class UserDataModel {
   UserDataModel({
     required this.name,
     required this.email,
+    required this.id,
     required this.gender,
     required this.age,
     required this.phone,
@@ -70,6 +72,7 @@ class UserDataModel {
       name: json['name'],
       email: json['email'],
       gender: json['gender'],
+      id: json['id'],
       age: json['age'],
       phone: json['phone'],
       role: json['role'],
@@ -87,6 +90,7 @@ class UserDataModel {
       'age': age,
       'phone': phone,
       'role': role,
+      'id': id,
       'isVerified': isVerified,
       'createdAt': createdAt?.toIso8601String(),
       'updatedAt': updatedAt?.toIso8601String(),
