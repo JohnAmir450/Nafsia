@@ -5,5 +5,9 @@ class ApiEndpoints {
   static const String forgetPassword = 'auth/forgot-password';
   static const String verifyOtp = 'auth/verify-otp';
   static const String resetPassword = 'auth/reset-password';
+  static const String getAllPosts = 'post';
+  static const String reactPost = 'react';
+  static const String getPostReactions = 'react';
+  static const String savePost = 'saved-posts';
   static const String getUserData = 'user';
 }
