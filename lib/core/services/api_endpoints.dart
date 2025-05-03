@@ -9,5 +9,8 @@ class ApiEndpoints {
   static const String reactPost = 'react';
   static const String getPostReactions = 'react';
   static const String savePost = 'saved-posts';
+  static const String getSavedPosts = 'saved-posts';
+  static const String removePostFromSavedPosts = 'saved-posts';
   static const String getUserData = 'user';
+  static const String updateUserProfile = 'user';
 }

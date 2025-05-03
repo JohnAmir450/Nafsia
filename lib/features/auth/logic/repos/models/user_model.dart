@@ -40,6 +40,16 @@ class UserModel {
       'token': token,
     };
   }
+  UserModel copyWith({
+    UserDataModel? userDataModel,
+    String? token,
+  }) {
+    return UserModel(
+      user: userDataModel ?? user,
+      token: token ?? this.token,
+    );
+  }
+  
 }
 
 class UserDataModel {
@@ -95,5 +105,31 @@ class UserDataModel {
       'createdAt': createdAt?.toIso8601String(),
       'updatedAt': updatedAt?.toIso8601String(),
     };
+  }
+  UserDataModel copyWith({
+    String? id,
+    String? name,
+    String? email,
+    String? phone,
+    int? age,
+    String? role,
+    String? token,
+    bool? isVerified,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    String ? gender,
+  }) {
+    return UserDataModel(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      email: email ?? this.email,
+      phone: phone ?? this.phone,
+      age: age ?? this.age,
+      role: role ?? this.role,
+      isVerified: isVerified ?? this.isVerified,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      gender: gender ?? this.gender,
+    );
   }
 }
