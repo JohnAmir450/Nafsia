@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:nafsia/core/utils/app_text_styles.dart';
 
 class CustomTextFormField extends StatelessWidget {
-  final String hintText;
+  final String? hintText;
   final TextInputType? textInputType;
   final int maxLines;
   final Widget? suffixIcon;
@@ -21,7 +21,7 @@ class CustomTextFormField extends StatelessWidget {
   final void Function(String?)? onSaved;
   const CustomTextFormField({
     super.key,
-    required this.hintText,
+     this.hintText,
     this.labelText,
     this.initialValue,
     this.textInputType,

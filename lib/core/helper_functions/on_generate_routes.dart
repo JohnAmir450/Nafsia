@@ -5,6 +5,7 @@ import 'package:nafsia/features/auth/presentation/views/forget_password_view.dar
 import 'package:nafsia/features/auth/presentation/views/login_view.dart';
 import 'package:nafsia/features/auth/presentation/views/reset_password_view.dart';
 import 'package:nafsia/features/auth/presentation/views/sign_up_view.dart';
+import 'package:nafsia/features/home/presentation/views/change_password_view.dart';
 import 'package:nafsia/features/home/presentation/views/chats_view.dart';
 import 'package:nafsia/features/home/presentation/views/doctors_view.dart';
 import 'package:nafsia/features/home/presentation/views/main_view.dart';
@@ -85,6 +86,12 @@ Route onGenerateRoutes(RouteSettings settings) {
           duration: const Duration(milliseconds: 50),
           child: const SavedPostsView(),
           type: PageTransitionType.fade);
+    case Routes.changePasswordView:
+      return PageTransition(
+          duration: const Duration(milliseconds: 50),
+          child: const ChangePasswordView(),
+          type: PageTransitionType.fade);
+
     default:
       // var isLoggedIn = FirebaseAuthService().isLoggedIn();
       return PageTransition(
