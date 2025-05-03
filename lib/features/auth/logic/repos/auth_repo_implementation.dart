@@ -121,11 +121,12 @@ class AuthRepoImplementation implements AuthRepo {
       return left(CustomFailure(message: e.errorModel.errorMessage));
     }
   }
-@override
+
+  @override
   Future<Either<Failure, void>> updateUserProfile({
-     String? name,
-     String? phone,
-     int? age,
+    String? name,
+    String? phone,
+    int? age,
   }) async {
     try {
       var token = getUserData().token;
@@ -170,8 +171,49 @@ class AuthRepoImplementation implements AuthRepo {
       return left(CustomFailure(message: 'حدث خطأ أثناء تحديث البيانات'));
     }
   }
+
+  @override
+  Future<Either<Failure, void>> changeUserPassword(
+      {required String oldPassword, required String newPassword})async {
+    try {
+      var token = getUserData().token;
+      await apiConsumer.put(
+        ApiEndpoints.changeUserPassword,
+        data: {
+          'oldPassword': oldPassword,
+          'newPassword': newPassword,
+        },
+        headers: {
+          'Authorization': 'Bearer $token',
+        },
+      );
+      return right(null);
+    } on ServerException catch (e) {
+      return left(CustomFailure(message: e.errorModel.errorMessage));
+    } catch (e) {
+      log(e.toString());
+      return left(CustomFailure(message: 'حدث خطاء ما، حاول مرة اخرى'));
+    }
+  }
   
- }
+  @override
+  Future<Either<Failure, void>> logout()async {
+    try {
+  var token = getUserData().token;
+    await apiConsumer.post(ApiEndpoints.logout, headers: {
+      'Authorization': 'Bearer $token',
+    });
+    await CacheHelper.removeData(key: kSaveUserDataKey);
+      
+    return right(null);
+} on ServerException catch (e) {
+  return left(CustomFailure(message: e.errorModel.errorMessage));
+} catch (e) {
+  log(e.toString());
+  return left(CustomFailure(message: 'حدث خطاء ما، حاول مرة اخرى'));
+}
+  }
+}
  
 // @override
 // Future<Either<Failure, void>> updateUserProfile({ String? name, String? phone, String? age }) async {

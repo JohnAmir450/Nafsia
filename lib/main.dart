@@ -9,6 +9,7 @@ import 'package:nafsia/core/helper_functions/rouutes.dart';
 import 'package:nafsia/core/services/get_it_service.dart';
 import 'package:nafsia/core/utils/app_colors.dart';
 import 'package:nafsia/core/utils/bloc_observer.dart';
+import 'package:nafsia/core/utils/chache_helper_keys.dart';
 import 'package:nafsia/core/utils/constants.dart';
 import 'package:nafsia/features/home/domain/models/mood_model.dart';
 import 'package:nafsia/generated/l10n.dart';
@@ -60,7 +61,9 @@ class MyApp extends StatelessWidget {
         locale: const Locale('ar'),
         debugShowCheckedModeBanner: false,
         onGenerateRoute: onGenerateRoutes,
-        initialRoute: Routes.mainView,
+        initialRoute: CacheHelper.getData(key: kSaveUserDataKey) != null
+            ? Routes.mainView
+            : Routes.loginView,
       ),
     );
   }

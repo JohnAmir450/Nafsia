@@ -14,4 +14,5 @@ class Routes{
   static const moreView='/moreView';
   static const userProfileView='/userProfileView';
   static const savedPostsView='/savedPostsView';
+  static const changePasswordView='/changePasswordView';
 }

@@ -17,3 +17,17 @@ final class UpdateUserProfileFailureState extends MoreState {
 final class UserMakeChangesInProfile extends MoreState {}
 
 
+final class ChangeUserPasswordLoadingState extends MoreState {}
+
+final class ChangeUserPasswordFailureState extends MoreState {
+  final String errorMessage;
+  ChangeUserPasswordFailureState({required this.errorMessage});
+}
+
+final class ChangeUserPasswordSuccessState extends MoreState {}
+
+final class LogOutFailureState extends MoreState {
+  final String errorMessage;
+  LogOutFailureState({required this.errorMessage});
+}
+final class LogOutSuccessState extends MoreState {}

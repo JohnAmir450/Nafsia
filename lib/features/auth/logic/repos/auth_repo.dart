@@ -21,15 +21,23 @@ abstract class AuthRepo {
   });
 
   Future<Either<Failure, void>> verifyOtp({
-  required String email,
-  required String otp,
-});
+    required String email,
+    required String otp,
+  });
 
-Future<Either<Failure, void>> resetPassword({
-  required String otp,
-  required String newPassword,
-});
+  Future<Either<Failure, void>> resetPassword({
+    required String otp,
+    required String newPassword,
+  });
 
-  Future<Either<Failure, void>> updateUserProfile({ String? name, String? phone,int? age});
-
+  Future<Either<Failure, void>> updateUserProfile({
+    String? name,
+    String? phone,
+    int? age,
+  });
+  Future<Either<Failure, void>> changeUserPassword({
+    required String oldPassword,
+    required String newPassword,
+  });
+  Future<Either<Failure, void>> logout();
 }
