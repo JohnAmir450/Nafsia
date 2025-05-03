@@ -20,22 +20,7 @@ class HomeCubit extends Cubit<HomeState> {
     result.fold(
       (failure) => emit(GetAllPostsFailureState(errorMessage: failure.message)),
       (posts) {
-        final String currentUserId = getUserData().user.id;
-
-        for (var post in posts) {
-          final postId = post.id;
-
-          // Set total like count
-          final likeCount = post.reactions
-              .where((reaction) => reaction.type == 'like')
-              .length;
-          postReactions[postId] = likeCount;
-
-          // Set if the current user has liked this post
-          final isLikedByUser = post.reactions
-              .any((reaction) => reaction.user.id == currentUserId);
-          isLiked[postId] = isLikedByUser ? 'like' : '';
-        }
+        checkIPostLiked(posts);
 
         emit(GetAllPostsSuccessState(posts: posts));
       },
@@ -83,5 +68,46 @@ class HomeCubit extends Cubit<HomeState> {
         emit(SavePostSuccessState());
       },
     );
+  }
+
+  Future<void> getSavedPosts() async {
+    emit(GetSavedPostsLoadingState());
+    var result = await homeRepo.getSavedPosts();
+    result.fold(
+        (failure) =>
+            emit(GetSavedPostsFailureState(errorMessage: failure.message)),
+        (posts) {
+      checkIPostLiked(posts);
+
+      emit(GetSavedPostsSuccessState(posts: posts));
+    });
+  }
+
+    Future<void> removePostFromSavedPosts({required String postId}) async {
+      final result = await homeRepo.removePostFromSavedPosts(postId: postId);
+      result.fold(
+        (failure) => emit(RemovePostFromSavedPostsFailureState(errorMessage: failure.message)),
+        (_) {
+          emit(RemovePostFromSavedPostsSuccessState());
+        },
+      );
+    }
+
+  void checkIPostLiked(List<PostModel> posts) {
+    final String currentUserId = getUserData().user.id;
+
+    for (var post in posts) {
+      final postId = post.id;
+
+      // Set total like count
+      final likeCount =
+          post.reactions.where((reaction) => reaction.type == 'like').length;
+      postReactions[postId] = likeCount;
+
+      // Set if the current user has liked this post
+      final isLikedByUser =
+          post.reactions.any((reaction) => reaction.user.id == currentUserId);
+      isLiked[postId] = isLikedByUser ? 'like' : '';
+    }
   }
 }

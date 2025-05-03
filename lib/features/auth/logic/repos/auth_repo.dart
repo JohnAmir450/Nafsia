@@ -29,4 +29,7 @@ Future<Either<Failure, void>> resetPassword({
   required String otp,
   required String newPassword,
 });
+
+  Future<Either<Failure, void>> updateUserProfile({ String? name, String? phone,int? age});
+
 }

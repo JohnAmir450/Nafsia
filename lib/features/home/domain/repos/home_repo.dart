@@ -9,4 +9,6 @@ abstract class HomeRepo {
   Future<Either<Failure, int>> getPostReactions({required String postId});
   Future<Either<Failure, void>> removeReaction({required String postId});
   Future<Either<Failure, void>> savePost({required String postId});
+  Future<Either<Failure, List<PostModel>>> getSavedPosts();
+  Future<Either<Failure, void>> removePostFromSavedPosts({required String postId});
 }

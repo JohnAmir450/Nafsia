@@ -35,12 +35,10 @@ class PostModel {
           .map((img) => ImageDataModel.fromJson(img))
           .toList(),
       doctor: DoctorDataModel.fromJson(json['doctorData']),
-      tags: (json['tagsData'] as List)
-          .map((tag) => TagDataModel.fromJson(tag))
-          .toList(),
-      reactions: (json['reactionsData'] as List)
-          .map((react) => ReactionDataModel.fromJson(react))
-          .toList(),
+      tags:  (json['tagsData'] as List?)?.map((tag) => TagDataModel.fromJson(tag)).toList() ?? [],
+      reactions: (json['reactionsData'] as List?)
+          ?.map((react) => ReactionDataModel.fromJson(react))
+          .toList()??[],
       createdAt: DateTime.parse(json['createdAt']),
       updatedAt: DateTime.parse(json['updatedAt']),
     );

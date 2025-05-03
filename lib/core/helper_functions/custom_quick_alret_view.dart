@@ -10,6 +10,7 @@ void customQuickAlertView(
   required String title,
   required String confirmBtnText,
   required QuickAlertType type,
+  bool? showCancelBtn,
   required void Function()? onConfirmBtnTap,
 }) {
   QuickAlert.show(
@@ -20,6 +21,7 @@ void customQuickAlertView(
     confirmBtnText: confirmBtnText,
     onConfirmBtnTap: onConfirmBtnTap,
     cancelBtnText: 'لا',
+    showCancelBtn: showCancelBtn ?? false,
     confirmBtnColor: AppColors.secondaryColor,
   );
 }
