@@ -15,4 +15,9 @@ class ApiEndpoints {
   static const String getUserData = 'user';
   static const String updateUserProfile = 'user';
   static const String changeUserPassword = 'user';
+  static const String getAllDoctors = 'user/all';
+  static const String getDoctorAppointments = 'appointment';
+  static const String bookPrivateSessionAppointment = 'session/private-session';
+  static const String searchDoctors = 'user/search';
+   static const String getDoctorReviews = 'review';
 }

@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nafsia/core/helper_functions/custom_quick_alret_view.dart';
 import 'package:nafsia/core/helper_functions/extentions.dart';
+import 'package:nafsia/core/helper_functions/get_dummy_post.dart';
 import 'package:nafsia/core/utils/custom_snak_bar.dart';
-import 'package:nafsia/core/widgets/custom_animated_loading_widget.dart';
 import 'package:nafsia/core/widgets/custom_post_item.dart';
 import 'package:nafsia/features/home/manager/home_cubit/home_cubit.dart';
 import 'package:quickalert/models/quickalert_type.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 class SavedPostsViewBody extends StatelessWidget {
   const SavedPostsViewBody({super.key});
@@ -65,8 +66,13 @@ class SavedPostsViewBody extends StatelessWidget {
             child: Text(state.errorMessage),
           );
         } else {
-          return const Center(
-            child: CustomAnimatedLoadingWidget(),
+          return  Skeletonizer(
+            child: Center(
+              child: ListView.builder(
+                itemBuilder: (context, index) =>  CustomPostItem(postModel: getDummyPost(),),
+                itemCount: 10,
+              ),
+            ),
           );
         }
       },

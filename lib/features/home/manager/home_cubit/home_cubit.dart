@@ -12,6 +12,7 @@ class HomeCubit extends Cubit<HomeState> {
   Map<String, String> isLiked = {};
   //late int postReactions ;
   Map<String, int> postReactions = {}; // key: postId, value: count
+ 
 
   Future<void> getAllPosts() async {
     emit(GetAllPostsLoadingState());
@@ -25,6 +26,7 @@ class HomeCubit extends Cubit<HomeState> {
         emit(GetAllPostsSuccessState(posts: posts));
       },
     );
+    
   }
 
   Future<void> reactPost(

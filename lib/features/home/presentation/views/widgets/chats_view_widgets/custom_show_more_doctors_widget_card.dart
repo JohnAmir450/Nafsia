@@ -21,8 +21,9 @@ class CustomShowMoreDoctorsWidgetCard extends StatelessWidget {
         margin: const EdgeInsets.all(8),
         constraints: BoxConstraints(
           maxHeight: MediaQuery.of(context).size.height * 0.12,
-          maxWidth: MediaQuery.of(context).size.width * 0.4,
-          minWidth: 250,
+          maxWidth: MediaQuery.of(context).size.width * 0.6,
+          minWidth:  MediaQuery.of(context).size.width *
+          0.5 ,
         ),
         padding: EdgeInsets.all(
             MediaQuery.of(context).size.width * 0.03), // Adaptive padding

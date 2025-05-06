@@ -5,8 +5,10 @@ import 'package:nafsia/features/auth/presentation/views/forget_password_view.dar
 import 'package:nafsia/features/auth/presentation/views/login_view.dart';
 import 'package:nafsia/features/auth/presentation/views/reset_password_view.dart';
 import 'package:nafsia/features/auth/presentation/views/sign_up_view.dart';
+import 'package:nafsia/features/home/domain/models/doctor_model.dart';
 import 'package:nafsia/features/home/presentation/views/change_password_view.dart';
 import 'package:nafsia/features/home/presentation/views/chats_view.dart';
+import 'package:nafsia/features/home/presentation/views/doctor_profile_view.dart';
 import 'package:nafsia/features/home/presentation/views/doctors_view.dart';
 import 'package:nafsia/features/home/presentation/views/main_view.dart';
 import 'package:nafsia/features/home/presentation/views/mode_selection_view.dart';
@@ -90,6 +92,13 @@ Route onGenerateRoutes(RouteSettings settings) {
       return PageTransition(
           duration: const Duration(milliseconds: 50),
           child: const ChangePasswordView(),
+          type: PageTransitionType.fade);
+
+    case Routes.doctorProfileView:
+    var doctor=settings.arguments as DoctorModel;
+      return PageTransition(
+          duration: const Duration(milliseconds: 50),
+          child:  DoctorProfileView(doctor: doctor,),
           type: PageTransitionType.fade);
 
     default:
