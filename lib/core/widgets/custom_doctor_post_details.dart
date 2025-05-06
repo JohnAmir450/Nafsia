@@ -30,7 +30,7 @@ class CustomDoctorPostDetails extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              doctorData.name,
+              doctorData.name!,
               style: TextStyles.semiBold16,
             ),
             Text(

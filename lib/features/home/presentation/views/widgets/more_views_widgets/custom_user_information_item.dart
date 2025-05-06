@@ -5,10 +5,12 @@ import 'package:nafsia/core/utils/app_text_styles.dart';
 
 class CustomUserInformationItem extends StatelessWidget {
   final String title, value;
+  final bool? withDecoration;
   const CustomUserInformationItem({
     super.key,
     required this.title,
     required this.value,
+    this.withDecoration,
   });
 
   @override
@@ -16,7 +18,7 @@ class CustomUserInformationItem extends StatelessWidget {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 14.h),
       width: double.infinity,
-      decoration: BoxDecoration(
+      decoration:withDecoration == false ? null : BoxDecoration(
         color: Colors.grey[200],
         borderRadius: BorderRadius.circular(16.r),
       ),

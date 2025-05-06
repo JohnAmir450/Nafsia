@@ -1,54 +1,40 @@
+import 'package:nafsia/features/auth/logic/repos/models/user_model.dart';
+import 'package:nafsia/features/home/domain/models/doctor_data_model.dart';
 
+class ReviewModel {
+  final String id;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+  final int rating;
+  final String comment;
+  final String doctorId;
+  final DoctorDataModel doctorData;
+  final String userId;
+  final UserDataModel userData;
 
-import 'package:nafsia/core/entities/review_entity.dart';
-
-final class ReviewModel {
-  final String name;
-  final String image;
-  final num ratting;
-  final String date;
-  final String reviewDescription;
-
-  ReviewModel(
-      {required this.name,
-      required this.image,
-      required this.ratting,
-      required this.date,
-      required this.reviewDescription});
+  ReviewModel({
+    required this.id,
+    required this.createdAt,
+    required this.updatedAt,
+    required this.rating,
+    required this.comment,
+    required this.doctorId,
+    required this.doctorData,
+    required this.userId,
+    required this.userData,
+  });
 
   factory ReviewModel.fromJson(Map<String, dynamic> json) {
     return ReviewModel(
-        name: json['name'],
-        image: json['image'],
-        ratting: json['ratting'],
-        date: json['date'],
-        reviewDescription: json['reviewDescription']);
-  }
-  factory ReviewModel.fromEntity(ReviewEntity entity) {
-    return ReviewModel(
-        name: entity.name,
-        image: entity.image,
-        ratting: entity.ratting,
-        date: entity.date,
-        reviewDescription: entity.reviewDescription);
-  }
-
-  toJson  () {
-    return {
-      'name': name,
-      'image': image,
-      'ratting': ratting,
-      'date': date,
-      'reviewDescription': reviewDescription,
-    };
-  }
-
- ReviewEntity toEntity(){
-    return ReviewEntity(
-        name: name,
-        image: image,
-        ratting: ratting,
-        date: date,
-        reviewDescription: reviewDescription);
+      id: json['_id'],
+      createdAt: DateTime.parse(json['createdAt']),
+      updatedAt: DateTime.parse(json['updatedAt']),
+      rating: json['rating'],
+      comment: json['comment'],
+      doctorId: json['doctorId'],
+      doctorData: DoctorDataModel.fromJson(json['doctorData']),
+      userId: json['userId'],
+      userData: UserDataModel.fromJson(json['userData']),
+    );
   }
 }
