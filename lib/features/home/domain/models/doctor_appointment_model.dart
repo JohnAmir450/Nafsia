@@ -1,3 +1,5 @@
+import 'package:nafsia/features/home/domain/models/doctor_model.dart';
+
 class AppointmentsResponse {
   final bool success;
   final String message;
@@ -25,23 +27,25 @@ class AppointmentModel {
   final String id;
   final String doctorId;
   final String day;
-  final String startAtHour;
+  
   final int duration;
+  final List<ScheduleItem> schedule;
   final int price;
   final DateTime createdAt;
   final DateTime updatedAt;
-  final DoctorData doctorData;
+  final DoctorModel doctorModel;
 
   AppointmentModel({
     required this.id,
     required this.doctorId,
     required this.day,
-    required this.startAtHour,
+    
     required this.duration,
     required this.price,
+    required this.schedule,
     required this.createdAt,
     required this.updatedAt,
-    required this.doctorData,
+    required this.doctorModel,
   });
 
   factory AppointmentModel.fromJson(Map<String, dynamic> json) {
@@ -49,12 +53,38 @@ class AppointmentModel {
       id: json['_id'],
       doctorId: json['doctorId'],
       day: json['day'],
-      startAtHour: json['startAtHour'],
+      
       duration: json['duration'],
+      schedule: (json['schedule'] as List)
+          .map((x) => ScheduleItem.fromJson(x))
+          .toList(),
       price: json['price'],
       createdAt: DateTime.parse(json['createdAt']),
       updatedAt: DateTime.parse(json['updatedAt']),
-      doctorData: DoctorData.fromJson(json['doctorData']),
+      doctorModel: DoctorModel.fromJson(json['doctorData']),
+    );
+  }
+}
+
+class ScheduleItem {
+  final String id;
+  final String startAt;
+  final bool isBooked;
+  final String? sessionId;
+
+  ScheduleItem({
+    required this.id,
+    required this.startAt,
+    required this.isBooked,
+    this.sessionId,
+  });
+
+  factory ScheduleItem.fromJson(Map<String, dynamic> json) {
+    return ScheduleItem(
+      id: json['_id'],
+      startAt: json['startAt'],
+      isBooked: json['isBooked'],
+      sessionId: json['sessionId'],
     );
   }
 }

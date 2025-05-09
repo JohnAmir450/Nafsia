@@ -75,7 +75,25 @@ class CustomMoreViewListTileActions extends StatelessWidget {
             },
           ),
           const Divider(),
-
+          // booked private sessions
+          CustomMoreViewListTileItem(
+            title: Text(
+              'مواعيدي',
+              style: TextStyles.bold16,
+            ),
+            leading: const Icon(
+              Icons.calendar_month,
+              color: AppColors.primaryColor,
+            ),
+            trailing: const Icon(
+              Icons.arrow_forward_ios,
+              color: AppColors.primaryColor,
+            ),
+            onTap: () {
+              context.pushNamed(Routes.myPrivateSessions);
+            },
+          ),
+          const Divider(),
           // Log Out
           CustomMoreViewListTileItem(
             leading: const Icon(Icons.logout, color: Colors.red),
@@ -86,10 +104,10 @@ class CustomMoreViewListTileActions extends StatelessWidget {
                 context,
                 text: 'هل تريد تسجيل الخروج؟',
                 title: 'تسجيل الخروج',
-                confirmBtnText: 'نعم', 
+                confirmBtnText: 'نعم',
                 showCancelBtn: true,
                 type: QuickAlertType.warning,
-                onConfirmBtnTap: () async{
+                onConfirmBtnTap: () async {
                   await context.read<MoreCubit>().logOut();
                   context.pushReplacementNamed(Routes.loginView);
                 },
@@ -104,14 +122,14 @@ class CustomMoreViewListTileActions extends StatelessWidget {
             title: Text('حذف الحساب',
                 style: TextStyles.bold16.copyWith(color: Colors.red)),
             onTap: () {
-               customQuickAlertView(
+              customQuickAlertView(
                 context,
                 text: 'هل تريد حذف الحساب؟',
-                title:  'حذف الحساب',
-                confirmBtnText: 'نعم', 
+                title: 'حذف الحساب',
+                confirmBtnText: 'نعم',
                 showCancelBtn: true,
                 type: QuickAlertType.warning,
-                onConfirmBtnTap: () async{
+                onConfirmBtnTap: () async {
                   await context.read<MoreCubit>().logOut();
                   context.pushReplacementNamed(Routes.loginView);
                 },

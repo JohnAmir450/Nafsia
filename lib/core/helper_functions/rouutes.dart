@@ -16,4 +16,6 @@ class Routes{
   static const savedPostsView='/savedPostsView';
   static const changePasswordView='/changePasswordView';
   static const doctorProfileView='/doctorProfileView';
+  static const communitySessionChatView='/communitySessionChatView';
+   static const myPrivateSessions='/myPrivateSessions';
 }

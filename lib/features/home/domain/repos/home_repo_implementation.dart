@@ -7,8 +7,10 @@ import 'package:nafsia/core/helper_functions/get_user_data.dart';
 import 'package:nafsia/core/models/reveiew_model.dart';
 import 'package:nafsia/core/services/api_consumer.dart';
 import 'package:nafsia/core/services/api_endpoints.dart';
+import 'package:nafsia/features/home/domain/models/community_messages_model.dart';
 import 'package:nafsia/features/home/domain/models/doctor_appointment_model.dart';
 import 'package:nafsia/features/home/domain/models/doctor_model.dart';
+import 'package:nafsia/features/home/domain/models/sessions_model.dart';
 import 'package:nafsia/features/home/domain/models/posts_model.dart';
 import 'package:nafsia/features/home/domain/repos/home_repo.dart';
 
@@ -208,10 +210,26 @@ class HomeRepoImplementation extends HomeRepo {
   @override
   Future<Either<Failure, void>> bookPrivateSessionAppointment(
       {required String callID,
-      required DateTime startAt,
-      required String appointmentId}) {
-    // TODO: implement bookPrivateSessionAppointment
-    throw UnimplementedError();
+      required int startAtIndex,
+      required String appointmentId}) async {
+    try {
+      final token = getUserData().token;
+      await apiConsumer.post(
+        ApiEndpoints.bookPrivateSessionAppointment,
+        data: {
+          'meetLink': callID,
+          'startAtIndex': startAtIndex,
+          'appointmentId': appointmentId,
+        },
+        headers: {'Authorization': 'Bearer $token'},
+      );
+      return right(null);
+    } on ServerException catch (e) {
+      return left(CustomFailure(message: e.errorModel.errorMessage));
+    } catch (e) {
+      print(e.toString());
+      return left(CustomFailure(message: 'حدث خطاء ما، حاول مرة اخرى'));
+    }
   }
 
   @override
@@ -236,7 +254,8 @@ class HomeRepoImplementation extends HomeRepo {
   }
 
   @override
-  Future<Either<Failure, List<ReviewModel>>> getDoctorReviews({required String doctorId})async {
+  Future<Either<Failure, List<ReviewModel>>> getDoctorReviews(
+      {required String doctorId}) async {
     try {
       final response = await apiConsumer.get(
         ApiEndpoints.getDoctorReviews,
@@ -246,6 +265,85 @@ class HomeRepoImplementation extends HomeRepo {
       );
       final List<dynamic> data = response['data'];
       return right(data.map((e) => ReviewModel.fromJson(e)).toList());
+    } on ServerException catch (e) {
+      return left(CustomFailure(message: e.errorModel.errorMessage));
+    } catch (e) {
+      log(e.toString());
+      return left(CustomFailure(message: 'حدث خطاء ما، حاول مرة اخرى'));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<SessionsModel>>> getCommunitySessions(
+      {String? userId}) async {
+    try {
+      final token = getUserData().token;
+      final response = await apiConsumer.get(
+        queryParameters: {'userId': userId, 'type': 'private'},
+        ApiEndpoints.getCommunitySessions,
+        headers: {'Authorization': 'Bearer $token'},
+      );
+      final List<dynamic> data = response['data'];
+      return right(data.map((e) => SessionsModel.fromJson(e)).toList());
+    } on ServerException catch (e) {
+      return left(CustomFailure(message: e.errorModel.errorMessage));
+    } catch (e) {
+      log(e.toString());
+      return left(CustomFailure(message: 'حدث خطاء ما، حاول مرة اخرى'));
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> participateInCommunitySession(
+      {required String sessionId}) async {
+    try {
+      final token = getUserData().token;
+      final String url =
+          '${ApiEndpoints.participateInCommunitySession}$sessionId/participate';
+      await apiConsumer.patch(url, headers: {'Authorization': 'Bearer $token'});
+      return right(null);
+    } on ServerException catch (e) {
+      return left(CustomFailure(message: e.errorModel.errorMessage));
+    } catch (e) {
+      print(e.toString());
+      return left(CustomFailure(message: 'حدث خطاء ما، حاول مرة اخرى'));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<CommunityMessageModel>>>
+      getCommunitySessionMessages({required String sessionId}) async {
+    try {
+      final token = getUserData().token;
+      final String url =
+          '${ApiEndpoints.getCommunitySessionMessages}$sessionId';
+      final response = await apiConsumer.get(
+        url,
+        headers: {'Authorization': 'Bearer $token'},
+      );
+      final List<dynamic> data = response['data'];
+      return right(data.map((e) => CommunityMessageModel.fromJson(e)).toList());
+    } on ServerException catch (e) {
+      return left(CustomFailure(message: e.errorModel.errorMessage));
+    } catch (e) {
+      log(e.toString());
+      return left(CustomFailure(message: 'حدث خطاء ما، حاول مرة اخرى'));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<SessionsModel>>>
+      getBookedPrivateSessions() async {
+    try {
+      final token = getUserData().token;
+      final userId = getUserData().user.id;
+      final response = await apiConsumer.get(
+        queryParameters: {'userId': userId, 'type': 'private'},
+        ApiEndpoints.getPrivateSessions,
+        headers: {'Authorization': 'Bearer $token'},
+      );
+      final List<dynamic> data = response['data'];
+      return right(data.map((e) => SessionsModel.fromJson(e)).toList());
     } on ServerException catch (e) {
       return left(CustomFailure(message: e.errorModel.errorMessage));
     } catch (e) {
