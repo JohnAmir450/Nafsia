@@ -5,13 +5,16 @@ import 'package:nafsia/features/auth/presentation/views/forget_password_view.dar
 import 'package:nafsia/features/auth/presentation/views/login_view.dart';
 import 'package:nafsia/features/auth/presentation/views/reset_password_view.dart';
 import 'package:nafsia/features/auth/presentation/views/sign_up_view.dart';
+import 'package:nafsia/features/home/domain/models/sessions_model.dart';
 import 'package:nafsia/features/home/domain/models/doctor_model.dart';
 import 'package:nafsia/features/home/presentation/views/change_password_view.dart';
 import 'package:nafsia/features/home/presentation/views/chats_view.dart';
+import 'package:nafsia/features/home/presentation/views/community_session_chat_view.dart';
 import 'package:nafsia/features/home/presentation/views/doctor_profile_view.dart';
 import 'package:nafsia/features/home/presentation/views/doctors_view.dart';
 import 'package:nafsia/features/home/presentation/views/main_view.dart';
 import 'package:nafsia/features/home/presentation/views/mode_selection_view.dart';
+import 'package:nafsia/features/home/presentation/views/my_private_sessions.dart';
 import 'package:nafsia/features/home/presentation/views/saved_posts_view.dart';
 import 'package:nafsia/features/home/presentation/views/user_profile_view.dart';
 
@@ -95,12 +98,26 @@ Route onGenerateRoutes(RouteSettings settings) {
           type: PageTransitionType.fade);
 
     case Routes.doctorProfileView:
-    var doctor=settings.arguments as DoctorModel;
+      var doctor = settings.arguments as DoctorModel;
       return PageTransition(
           duration: const Duration(milliseconds: 50),
-          child:  DoctorProfileView(doctor: doctor,),
+          child: DoctorProfileView(
+            doctor: doctor,
+          ),
+          type: PageTransitionType.fade);
+    case Routes.communitySessionChatView:
+      var communitySessionsModel = settings.arguments as SessionsModel;
+      return PageTransition(
+          duration: const Duration(milliseconds: 50),
+          child: CommunitySessionChatView(
+              communitySessionsModel: communitySessionsModel),
           type: PageTransitionType.fade);
 
+    case Routes.myPrivateSessions:
+      return PageTransition(
+          duration: const Duration(milliseconds: 50),
+          child: const MyPrivateSessionsView(),
+          type: PageTransitionType.fade);
     default:
       // var isLoggedIn = FirebaseAuthService().isLoggedIn();
       return PageTransition(

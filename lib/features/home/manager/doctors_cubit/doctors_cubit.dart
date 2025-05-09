@@ -3,6 +3,7 @@ import 'package:meta/meta.dart';
 import 'package:nafsia/core/models/reveiew_model.dart';
 import 'package:nafsia/features/home/domain/models/doctor_appointment_model.dart';
 import 'package:nafsia/features/home/domain/models/doctor_model.dart';
+import 'package:nafsia/features/home/domain/models/sessions_model.dart';
 import 'package:nafsia/features/home/domain/repos/home_repo.dart';
 
 part 'doctors_state.dart';
@@ -55,4 +56,31 @@ class DoctorsCubit extends Cubit<DoctorsState> {
       },
     );
   }
-}
+
+  Future<void> bookPrivateSessionAppointment(
+      {required String callID,
+      required int startAtIndex,
+      required String appointmentId}) async {
+    emit(BookPrivateSessionAppointmentLoadingState());
+    final result = await homeRepo.bookPrivateSessionAppointment(
+        callID: callID, startAtIndex: startAtIndex, appointmentId: appointmentId);
+    result.fold(
+      (failure) =>
+          emit(BookPrivateSessionAppointmentFailureState(errorMessage: failure.message)),
+      (_) {
+        emit(BookPrivateSessionAppointmentSuccessState());
+      },
+    );
+  }
+  Future<void> getBookedPrivateSessions() async {
+    emit(GetBookedPrivateSessionsLoadingState());
+    final result = await homeRepo.getBookedPrivateSessions();
+    result.fold(
+      (failure) =>
+          emit(GetBookedPrivateSessionsFailureState(errorMessage: failure.message)),
+      (appointments) {
+        emit(GetBookedPrivateSessionsSuccessState(appointments: appointments));
+      },
+    );
+  }
+ }

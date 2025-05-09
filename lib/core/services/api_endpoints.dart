@@ -19,5 +19,9 @@ class ApiEndpoints {
   static const String getDoctorAppointments = 'appointment';
   static const String bookPrivateSessionAppointment = 'session/private-session';
   static const String searchDoctors = 'user/search';
-   static const String getDoctorReviews = 'review';
+  static const String getDoctorReviews = 'review';
+  static const String getCommunitySessions = 'session';
+   static const String getPrivateSessions = 'session';
+  static const String participateInCommunitySession = 'session/community-session/';
+  static const String getCommunitySessionMessages = 'message/';
 }

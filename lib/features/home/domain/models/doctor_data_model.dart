@@ -3,6 +3,7 @@ class DoctorDataModel {
   final String? name;
   final String avatarUrl;
   final String? specialization;
+  //final String? description;
   final int? rate;
   final int? balance;
 

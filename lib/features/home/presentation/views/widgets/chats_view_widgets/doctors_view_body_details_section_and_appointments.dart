@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:nafsia/core/utils/app_colors.dart';
 import 'package:nafsia/core/utils/app_text_styles.dart';
 import 'package:nafsia/core/utils/custom_box_decoration.dart';
+import 'package:nafsia/core/utils/custom_snak_bar.dart';
 import 'package:nafsia/core/utils/spacing.dart';
-import 'package:nafsia/core/widgets/custom_button.dart';
 import 'package:nafsia/core/widgets/my_divider.dart';
+import 'package:nafsia/features/home/presentation/views/widgets/chats_view_widgets/appointment_details_section.dart';
 import 'package:nafsia/features/home/presentation/views/widgets/chats_view_widgets/custom_appointment_item.dart';
-
 import '../../../../manager/doctors_cubit/doctors_cubit.dart';
 
 class DoctorProfileViewBodyDetailsAndAppointmentsSection
@@ -21,6 +22,8 @@ class DoctorProfileViewBodyDetailsAndAppointmentsSection
 class _DoctorProfileViewBodyDetailsAndAppointmentsSectionState
     extends State<DoctorProfileViewBodyDetailsAndAppointmentsSection> {
   int? selectedAppointmentIndex;
+  int? selectedScheduleIndex;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -43,7 +46,16 @@ class _DoctorProfileViewBodyDetailsAndAppointmentsSectionState
           verticalSpace(8),
           Text('المواعيد المتاحة', style: TextStyles.bold16),
           verticalSpace(12),
-          BlocBuilder<DoctorsCubit, DoctorsState>(
+          BlocConsumer<DoctorsCubit, DoctorsState>(
+            listener: (context, state) {
+              if (state is BookPrivateSessionAppointmentSuccessState) {
+                showSnackBar(context,
+                    text: 'تم حجز الموعد بنجاح', color: AppColors.primaryColor);
+              }
+              if (state is BookPrivateSessionAppointmentFailureState) {
+                showSnackBar(context, text: state.errorMessage);
+              }
+            },
             buildWhen: (previous, current) =>
                 current is GetDoctorAppointmentsSuccessState ||
                 current is GetDoctorAppointmentsFailureState ||
@@ -62,7 +74,11 @@ class _DoctorProfileViewBodyDetailsAndAppointmentsSectionState
                         itemBuilder: (context, index) => GestureDetector(
                             onTap: () {
                               setState(() {
-                                selectedAppointmentIndex = index;
+                                if (selectedAppointmentIndex == index) {
+                                  selectedAppointmentIndex = null;
+                                } else {
+                                  selectedAppointmentIndex = index;
+                                }
                               });
                             },
                             child: CustomAppointmentItem(
@@ -73,26 +89,20 @@ class _DoctorProfileViewBodyDetailsAndAppointmentsSectionState
                       ),
                     ),
                     verticalSpace(16),
-                    Visibility(
-                        visible: selectedAppointmentIndex != null,
-                        child: Text('تفاصيل الموعد', style: TextStyles.bold16)),
-                    verticalSpace(8),
-                    Visibility(
-                      visible: selectedAppointmentIndex != null,
-                      child: Row(
-                        children: [
-                          Text('مدة الجلسة : ', style: TextStyles.bold16),
-                          Text(
-                              '${state.appointments[selectedAppointmentIndex ?? 0].duration} دقيقة',
-                              style: TextStyles.semiBold16),
-                          const Spacer(),
-                          Text('سعر الجلسة : ', style: TextStyles.bold16),
-                          Text(
-                              '${state.appointments[selectedAppointmentIndex ?? 0].price} جنيه',
-                              style: TextStyles.semiBold16),
-                        ],
-                      ),
-                    ),
+                    AppointmentDetailsSection(
+                      state: state,
+                      selectedAppointmentIndex: selectedAppointmentIndex,
+                      selectedScheduleIndex: selectedScheduleIndex,
+                      onScheduleTap: (index) {
+                        setState(() {
+                          if (selectedScheduleIndex == index) {
+                            selectedScheduleIndex = null;
+                          } else {
+                            selectedScheduleIndex = index;
+                          }
+                        });
+                      },
+                    )
                   ],
                 );
               } else if (state is GetDoctorAppointmentsFailureState) {
@@ -102,12 +112,6 @@ class _DoctorProfileViewBodyDetailsAndAppointmentsSectionState
               }
             },
           ),
-          verticalSpace(16),
-          if (selectedAppointmentIndex != null)
-            CustomButton(
-              text: 'حجز موعد',
-              onPressed: () {},
-            ),
         ],
       ),
     );

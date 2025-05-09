@@ -47,3 +47,28 @@ final class GetDoctorReviewsFailureState extends DoctorsState {
 }
 
 final class GetDoctorReviewsLoadingState extends DoctorsState {}
+
+final class BookPrivateSessionAppointmentLoadingState extends DoctorsState {}
+
+final class BookPrivateSessionAppointmentSuccessState extends DoctorsState {}
+
+final class BookPrivateSessionAppointmentFailureState extends DoctorsState {
+  final String errorMessage;
+  BookPrivateSessionAppointmentFailureState({required this.errorMessage});
+}
+
+final class GetBookedPrivateSessionsLoadingState extends DoctorsState {}
+
+
+final class GetBookedPrivateSessionsSuccessState extends DoctorsState {
+  final List<SessionsModel> appointments;
+
+  GetBookedPrivateSessionsSuccessState({required this.appointments});
+}
+
+
+final class GetBookedPrivateSessionsFailureState extends DoctorsState {
+  final String errorMessage;
+  GetBookedPrivateSessionsFailureState({required this.errorMessage});
+}
+
