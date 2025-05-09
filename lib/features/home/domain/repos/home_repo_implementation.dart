@@ -211,7 +211,7 @@ class HomeRepoImplementation extends HomeRepo {
   Future<Either<Failure, void>> bookPrivateSessionAppointment(
       {required String callID,
       required int startAtIndex,
-      required String appointmentId}) async {
+      required String appointmentId})async {
     try {
       final token = getUserData().token;
       await apiConsumer.post(
@@ -279,12 +279,13 @@ class HomeRepoImplementation extends HomeRepo {
     try {
       final token = getUserData().token;
       final response = await apiConsumer.get(
-        queryParameters: {'userId': userId, 'type': 'private'},
+        queryParameters: userId != null ? {'userId': userId,'type':'community'} : {'type':'community'},
         ApiEndpoints.getCommunitySessions,
         headers: {'Authorization': 'Bearer $token'},
       );
       final List<dynamic> data = response['data'];
-      return right(data.map((e) => SessionsModel.fromJson(e)).toList());
+      return right(
+          data.map((e) => SessionsModel.fromJson(e)).toList());
     } on ServerException catch (e) {
       return left(CustomFailure(message: e.errorModel.errorMessage));
     } catch (e) {
@@ -315,7 +316,7 @@ class HomeRepoImplementation extends HomeRepo {
       getCommunitySessionMessages({required String sessionId}) async {
     try {
       final token = getUserData().token;
-      final String url =
+       final String url =
           '${ApiEndpoints.getCommunitySessionMessages}$sessionId';
       final response = await apiConsumer.get(
         url,
@@ -330,15 +331,17 @@ class HomeRepoImplementation extends HomeRepo {
       return left(CustomFailure(message: 'حدث خطاء ما، حاول مرة اخرى'));
     }
   }
-
-  @override
+  
+  @override 
   Future<Either<Failure, List<SessionsModel>>>
       getBookedPrivateSessions() async {
     try {
       final token = getUserData().token;
       final userId = getUserData().user.id;
       final response = await apiConsumer.get(
-        queryParameters: {'userId': userId, 'type': 'private'},
+        queryParameters:
+             {'userId': userId, 'type': 'private'},
+            
         ApiEndpoints.getPrivateSessions,
         headers: {'Authorization': 'Bearer $token'},
       );
