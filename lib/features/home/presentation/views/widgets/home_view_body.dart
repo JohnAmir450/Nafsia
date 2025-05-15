@@ -60,8 +60,9 @@ class HomeViewBody extends StatelessWidget {
 
                 if (state is GetAllPostsSuccessState) {
                   return SliverList.builder(
+                    
                     itemBuilder: (context, index) => CustomPostItem(
-                      postModel: state.posts[index],
+                      postModel: state.posts[state.posts.length - 1 - index],
                     ),
                     itemCount: state.posts.length,
                   );

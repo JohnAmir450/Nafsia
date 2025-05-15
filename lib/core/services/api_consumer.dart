@@ -4,6 +4,7 @@ abstract class ApiConsumer {
     Object? data,
     Map<String, dynamic>? queryParameters,
     Map<String, dynamic>? headers,
+    String? customBaseUrl,
   });
 
   Future post(
@@ -12,6 +13,7 @@ abstract class ApiConsumer {
     Map<String, dynamic>? queryParameters,
     Map<String, dynamic>? headers,
     bool isFromData = false,
+    String? customBaseUrl,
   });
 
   Future patch(
@@ -20,6 +22,7 @@ abstract class ApiConsumer {
     Map<String, dynamic>? queryParameters,
     Map<String, dynamic>? headers,
     bool isFromData = false,
+    String? customBaseUrl,
   });
 
   Future delete(
@@ -28,6 +31,7 @@ abstract class ApiConsumer {
     Map<String, dynamic>? queryParameters,
     Map<String, dynamic>? headers,
     bool isFromData = false,
+    String? customBaseUrl,
   });
 
   Future put(
@@ -36,5 +40,6 @@ abstract class ApiConsumer {
     Map<String, dynamic>? queryParameters,
     Map<String, dynamic>? headers,
     bool isFromData = false,
+    String? customBaseUrl,
   });
 }

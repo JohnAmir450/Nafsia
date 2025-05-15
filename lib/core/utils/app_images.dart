@@ -51,8 +51,8 @@ class Assets {
   static const String assetsImagesMoreInactive = "assets/images/more_inactive.svg";
 
   /// Assets for assetsImagesNafsiaLogo
-  /// assets/images/nafsia_logo.jpg
-  static const String assetsImagesNafsiaLogo = "assets/images/nafsia_logo.jpg";
+  /// assets/images/nafsia_logo.png
+  static const String assetsImagesNafsiaLogo = "assets/images/nafsia_logo.png";
 
   /// Assets for assetsImagesPostTestImage
   /// assets/images/post_test_image.jpg

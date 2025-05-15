@@ -23,7 +23,8 @@ class DoctorsCubit extends Cubit<DoctorsState> {
       },
     );
   }
-  Future<void>searchDoctors({required String doctorName}) async {
+
+  Future<void> searchDoctors({required String doctorName}) async {
     emit(SearchDoctorsLoadingState());
     final result = await homeRepo.searchDoctors(doctorName: doctorName);
     result.fold(
@@ -34,18 +35,20 @@ class DoctorsCubit extends Cubit<DoctorsState> {
       },
     );
   }
+
   Future<void> getDoctorAppointments({required String doctorId}) async {
     emit(GetDoctorAppointmentsLoadingState());
     final result = await homeRepo.getDoctorAppointments(doctorId: doctorId);
     result.fold(
-      (failure) =>
-          emit(GetDoctorAppointmentsFailureState(errorMessage: failure.message)),
+      (failure) => emit(
+          GetDoctorAppointmentsFailureState(errorMessage: failure.message)),
       (appointments) {
         emit(GetDoctorAppointmentsSuccessState(appointments: appointments));
       },
     );
   }
-  Future<void>getDoctorReviews({required String doctorId}) async {
+
+  Future<void> getDoctorReviews({required String doctorId}) async {
     emit(GetDoctorReviewsLoadingState());
     final result = await homeRepo.getDoctorReviews(doctorId: doctorId);
     result.fold(
@@ -60,27 +63,36 @@ class DoctorsCubit extends Cubit<DoctorsState> {
   Future<void> bookPrivateSessionAppointment(
       {required String callID,
       required int startAtIndex,
+      required int amount,
       required String appointmentId}) async {
     emit(BookPrivateSessionAppointmentLoadingState());
     final result = await homeRepo.bookPrivateSessionAppointment(
-        callID: callID, startAtIndex: startAtIndex, appointmentId: appointmentId);
+        callID: callID,
+        startAtIndex: startAtIndex,
+        appointmentId: appointmentId,
+        amount: amount);
     result.fold(
-      (failure) =>
-          emit(BookPrivateSessionAppointmentFailureState(errorMessage: failure.message)),
+      (failure) => emit(BookPrivateSessionAppointmentFailureState(
+          errorMessage: failure.message)),
       (_) {
         emit(BookPrivateSessionAppointmentSuccessState());
       },
     );
   }
+
   Future<void> getBookedPrivateSessions() async {
     emit(GetBookedPrivateSessionsLoadingState());
     final result = await homeRepo.getBookedPrivateSessions();
     result.fold(
-      (failure) =>
-          emit(GetBookedPrivateSessionsFailureState(errorMessage: failure.message)),
+      (failure) => emit(
+          GetBookedPrivateSessionsFailureState(errorMessage: failure.message)),
       (appointments) {
         emit(GetBookedPrivateSessionsSuccessState(appointments: appointments));
       },
     );
   }
- }
+
+  void paymentStatusChanged(bool status) {
+    emit(PaymentStatusChangedState(paymentDone: status));
+  }
+}

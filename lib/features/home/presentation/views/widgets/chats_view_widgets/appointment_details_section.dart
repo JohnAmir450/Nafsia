@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:nafsia/core/services/paymob_manager.dart';
 import 'package:nafsia/core/utils/app_text_styles.dart';
+import 'package:nafsia/core/utils/custom_snak_bar.dart';
 import 'package:nafsia/core/utils/spacing.dart';
 import 'package:nafsia/core/widgets/custom_animated_loading_widget.dart';
 import 'package:nafsia/core/widgets/custom_button.dart';
 import 'package:nafsia/features/home/manager/doctors_cubit/doctors_cubit.dart';
+import 'package:nafsia/features/home/presentation/views/payment_web_view.dart';
 import 'package:nafsia/features/home/presentation/views/widgets/chats_view_widgets/custom_schedule_item.dart';
 
 class AppointmentDetailsSection extends StatelessWidget {
@@ -66,14 +69,31 @@ class AppointmentDetailsSection extends StatelessWidget {
                   ? const CustomAnimatedLoadingWidget()
                   : CustomButton(
                       text: 'حجز موعد',
-                      onPressed: () {
-                        context
-                            .read<DoctorsCubit>()
-                            .bookPrivateSessionAppointment(
-                              callID: 'https://meet.google.com/mdt-gvvq-amb',
-                              startAtIndex: selectedScheduleIndex!,
-                              appointmentId: appointment.id,
-                            );
+                      onPressed: () async {
+                        final token = await PaymobManager()
+                            .getPaymentKey(appointment.price, "EGP");
+                        var result = await Navigator.push<bool>(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) =>
+                                PaymentWebViewScreen(paymentToken: token),
+                          ),
+                        );
+                        print('result $result');
+                        if (result == true) {
+                          // Proceed with booking session
+                          context
+                              .read<DoctorsCubit>()
+                              .bookPrivateSessionAppointment(
+                                amount: appointment.price,
+                                callID: 'https://meet.google.com/mdt-gvvq-amb',
+                                startAtIndex: selectedScheduleIndex!,
+                                appointmentId: appointment.id,
+                              );
+                        } else {
+                          // Show error message
+                          showSnackBar(context, text: "فشل الدفع أو تم إلغاؤه");
+                        }
                       },
                     );
             },

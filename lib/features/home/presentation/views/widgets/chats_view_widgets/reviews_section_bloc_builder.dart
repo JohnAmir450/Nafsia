@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:nafsia/core/helper_functions/get_dummy_doctor_reviews.dart';
 import 'package:nafsia/core/utils/app_text_styles.dart';
 import 'package:nafsia/core/utils/custom_box_decoration.dart';
 import 'package:nafsia/core/utils/spacing.dart';
 import 'package:nafsia/features/home/manager/doctors_cubit/doctors_cubit.dart';
 import 'package:nafsia/features/home/presentation/views/widgets/chats_view_widgets/custom_doctor_review_item.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 class ReviewsSectionBlocBuilder extends StatelessWidget {
   const ReviewsSectionBlocBuilder({
@@ -48,7 +50,16 @@ class ReviewsSectionBlocBuilder extends StatelessWidget {
           } else if (state is GetDoctorReviewsFailureState) {
             return Center(child: Text(state.errorMessage));
           } else {
-            return const Center(child: CircularProgressIndicator());
+            return Skeletonizer(
+              child: ListView.builder(
+                itemCount: 10,
+                shrinkWrap: true,
+                itemBuilder: (context, index) => CustomDoctorReviewItem(
+                  review: getDummyDoctorReview(),
+                
+                ),
+              ),
+            );
           }
         },
       ),

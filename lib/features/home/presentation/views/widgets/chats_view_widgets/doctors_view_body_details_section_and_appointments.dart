@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:nafsia/core/helper_functions/get_dummy_appointments.dart';
 import 'package:nafsia/core/utils/app_colors.dart';
 import 'package:nafsia/core/utils/app_text_styles.dart';
 import 'package:nafsia/core/utils/custom_box_decoration.dart';
@@ -8,6 +9,7 @@ import 'package:nafsia/core/utils/spacing.dart';
 import 'package:nafsia/core/widgets/my_divider.dart';
 import 'package:nafsia/features/home/presentation/views/widgets/chats_view_widgets/appointment_details_section.dart';
 import 'package:nafsia/features/home/presentation/views/widgets/chats_view_widgets/custom_appointment_item.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 import '../../../../manager/doctors_cubit/doctors_cubit.dart';
 
 class DoctorProfileViewBodyDetailsAndAppointmentsSection
@@ -108,7 +110,19 @@ class _DoctorProfileViewBodyDetailsAndAppointmentsSectionState
               } else if (state is GetDoctorAppointmentsFailureState) {
                 return Center(child: Text(state.errorMessage));
               } else {
-                return const Center(child: CircularProgressIndicator());
+                return Skeletonizer(
+                  child: SizedBox(
+                    height: 100,
+                    child: ListView.builder(
+                      physics: const BouncingScrollPhysics(),
+                      itemBuilder: (context, index) => CustomAppointmentItem(
+                        appointment: getDummyAppointment(),
+                      ),
+                      itemCount: 10,
+                      scrollDirection: Axis.horizontal,
+                    ),
+                  ),
+                );
               }
             },
           ),

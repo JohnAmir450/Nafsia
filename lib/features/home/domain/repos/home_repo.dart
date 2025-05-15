@@ -23,18 +23,21 @@ abstract class HomeRepo {
       {required String doctorId});
   Future<Either<Failure, void>> bookPrivateSessionAppointment(
       {required String callID,
-       required int startAtIndex,
+      required int startAtIndex,
+      required int amount,
       required String appointmentId});
 
   Future<Either<Failure, List<DoctorModel>>> searchDoctors(
       {required String doctorName});
   Future<Either<Failure, List<ReviewModel>>> getDoctorReviews(
       {required String doctorId});
-  Future<Either<Failure, List<SessionsModel>>> getCommunitySessions({String? userId});
+  Future<Either<Failure, List<SessionsModel>>> getCommunitySessions(
+      {String? userId});
   Future<Either<Failure, void>> participateInCommunitySession(
       {required String sessionId});
 
-      Future<Either<Failure, List<CommunityMessageModel>>> getCommunitySessionMessages({required String sessionId});
+  Future<Either<Failure, List<CommunityMessageModel>>>
+      getCommunitySessionMessages({required String sessionId});
 
-Future<Either<Failure, List<SessionsModel>>>getBookedPrivateSessions();
+  Future<Either<Failure, List<SessionsModel>>> getBookedPrivateSessions();
 }

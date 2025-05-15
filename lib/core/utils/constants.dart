@@ -1,3 +1,5 @@
 const kMoodBox = 'MoodBox';
 const kHorizontalPadding = 16.0;
 const kVerticalPadding = 12.0;
+const kPaymentApiKey='ZXlKaGJHY2lPaUpJVXpVeE1pSXNJblI1Y0NJNklrcFhWQ0o5LmV5SmpiR0Z6Y3lJNklrMWxjbU5vWVc1MElpd2ljSEp2Wm1sc1pWOXdheUk2TVRBME16TXdOeXdpYm1GdFpTSTZJbWx1YVhScFlXd2lmUS5aZ0luRk4wRkVGUG0wd2lJckhlSHVYODRsdzVfT1NlNGV6ck9aWUZTRXBja25adHdjcnhSVDJ1YkxNZTdSR2ZUbDVJSDV1dmtRTHZnUnhIN2FmcmhSUQ==';
+const kCardPaymentMethodId='5086333';

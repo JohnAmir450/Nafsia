@@ -72,3 +72,8 @@ final class GetBookedPrivateSessionsFailureState extends DoctorsState {
   GetBookedPrivateSessionsFailureState({required this.errorMessage});
 }
 
+final class PaymentStatusChangedState extends DoctorsState {
+
+  final bool paymentDone;
+  PaymentStatusChangedState({required this.paymentDone});
+}
