@@ -42,6 +42,14 @@ class DoctorMainDetailsCard extends StatelessWidget {
                       TextStyles.semiBold13.copyWith(color: Colors.grey[700]),
                 ),
               ),
+              verticalSpace(8),
+              FittedBox(
+                child: Text(
+                  doctor.doctorData?.description ?? '',
+                  style: TextStyles.semiBold13.copyWith(color: Colors.grey[700],),
+                  maxLines: 1,overflow: TextOverflow.ellipsis,
+                ),
+              ),
             ],
           ),
         ),

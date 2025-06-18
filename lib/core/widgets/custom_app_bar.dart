@@ -3,6 +3,7 @@ import 'package:nafsia/core/utils/app_text_styles.dart';
 
 AppBar buildAppBar(context, { String? title,void Function()?onTap,bool visibleLeading=true,List<Widget>?actions}) {
     return AppBar(
+      backgroundColor: Colors.white,
       actions: actions,
       leading:visibleLeading? GestureDetector(
         onTap:onTap ,

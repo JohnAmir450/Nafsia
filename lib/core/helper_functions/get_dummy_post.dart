@@ -23,5 +23,6 @@ PostModel getDummyPost() {
         name: 'name',
         specialization: 'specialization',
         avatarUrl: 'https://img.freepik.com/free-vector/man-shows-gesture-great-idea_10045-637.jpg?t=st=1746547552~exp=1746551152~hmac=5e83ad2d2dcd1105ec90c4a9d3abc20e401cc12b4e14dc5b2e1b523583807bf3&w=826',
-      ));
+      )
+      );
 }

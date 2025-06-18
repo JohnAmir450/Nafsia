@@ -8,6 +8,7 @@ class DoctorModel {
   final String role;
   final int age;
   final String gender;
+  
   final bool isVerified;
   final String? avatarUrl;
   final String createdAt;
@@ -34,6 +35,7 @@ class DoctorModel {
       id: json['id'],
       name: json['name'],
       email: json['email'],
+      
       phone: json['phone'],
       createdAt: json['createdAt'],
       role: json['role'],

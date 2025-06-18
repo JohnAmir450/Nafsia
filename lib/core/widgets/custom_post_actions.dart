@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:nafsia/core/helper_functions/get_user_data.dart';
+import 'package:nafsia/core/services/notification_service.dart';
 import 'package:nafsia/core/utils/app_colors.dart';
 import 'package:nafsia/core/utils/spacing.dart';
 import 'package:nafsia/features/home/domain/models/posts_model.dart';
@@ -18,7 +20,7 @@ class CustomPostActions extends StatelessWidget {
       builder: (context, state) {
         final cubit = context.read<HomeCubit>();
         final postId = postModel.id;
-        final isLiked = cubit.isLiked[postId] == 'like';
+        bool isLiked = cubit.isLiked[postId] == 'like';
         final reactionCount =
             cubit.postReactions[postId] ?? postModel.reactions.length;
 
@@ -26,6 +28,9 @@ class CustomPostActions extends StatelessWidget {
           children: [
             IconButton(
                 onPressed: () async {
+                  isLiked=true;
+                  NotificationService().sendNotification(title: 'لقد حصلت على اعجاب  من ${getUserData().user.name}',
+                   body: '');
                   await cubit.reactPost(postId: postId, reaction: 'like');
                 },
                 icon: isLiked

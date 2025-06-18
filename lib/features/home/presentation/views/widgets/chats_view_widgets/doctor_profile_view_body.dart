@@ -27,7 +27,7 @@ class DoctorProfileViewBody extends StatelessWidget {
               doctor: doctor,
             ),
             verticalSpace(30),
-            const DoctorProfileViewBodyDetailsAndAppointmentsSection(),
+             DoctorProfileViewBodyDetailsAndAppointmentsSection(dataDataModel: doctor.doctorData!,),
             verticalSpace(16),
             const ReviewsSectionBlocBuilder()
           ],

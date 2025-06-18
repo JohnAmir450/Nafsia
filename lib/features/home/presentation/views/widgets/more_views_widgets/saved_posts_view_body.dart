@@ -34,6 +34,7 @@ class SavedPostsViewBody extends StatelessWidget {
               alignment: AlignmentDirectional.topEnd,
               children: [
                 CustomPostItem(
+                  isVisible: false,
                   postModel: state.posts[index],
                 ),
                 IconButton(

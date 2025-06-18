@@ -194,7 +194,7 @@ class HomeRepoImplementation extends HomeRepo {
     try {
       final response = await apiConsumer.get(
         ApiEndpoints.getDoctorAppointments,
-        queryParameters: {'doctorId': doctorId},
+        queryParameters: {'doctorId': doctorId,},
       );
       final List<dynamic> data = response['data'];
       return right(data.map((e) => AppointmentModel.fromJson(e)).toList());
@@ -231,7 +231,6 @@ class HomeRepoImplementation extends HomeRepo {
       return left(CustomFailure(message: 'حدث خطاء ما، حاول مرة اخرى'));
     }
   }
-
 
   @override
   Future<Either<Failure, List<DoctorModel>>> searchDoctors(
@@ -341,12 +340,100 @@ class HomeRepoImplementation extends HomeRepo {
       final token = getUserData().token;
       final userId = getUserData().user.id;
       final response = await apiConsumer.get(
-        queryParameters: {'userId': userId, 'type': 'private'},
+        queryParameters: {
+          'userId': userId,
+          'type': 'private',
+          'pageSize': 100,
+        },
         ApiEndpoints.getPrivateSessions,
         headers: {'Authorization': 'Bearer $token'},
       );
       final List<dynamic> data = response['data'];
       return right(data.map((e) => SessionsModel.fromJson(e)).toList());
+    } on ServerException catch (e) {
+      return left(CustomFailure(message: e.errorModel.errorMessage));
+    } catch (e) {
+      log(e.toString());
+      return left(CustomFailure(message: 'حدث خطاء ما، حاول مرة اخرى'));
+    }
+  }
+
+  @override
+  Future<Either<Failure, int>> getStressPrediction({
+    required String job,
+    required int sleepQuality,
+    required int sleepDuration,
+  }) async {
+    try {
+      final user = getUserData().user;
+
+      final sensorResult = await getLatestSensorData();
+
+      if (sensorResult.isLeft()) {
+        // 🔴 Return the error if fetching sensor data fails
+        return left(sensorResult.swap().getOrElse(
+            () => CustomFailure(message: 'فشل في قراءة بيانات الحساس')));
+      }
+
+      final data = sensorResult.getOrElse(() => {});
+      final heartRate = data['heart_rate'];
+
+      final response = await apiConsumer.post(
+        ApiEndpoints.stressDetection,
+        customBaseUrl: ApiEndpoints.stressDetectionBaseUrl,
+        data: {
+          "gender": user.gender,
+          "age": user.age,
+          "occupation": job,
+          "sleep_duration": sleepDuration,
+          "sleep_quality": sleepQuality,
+          "bmi_category": "Normal",
+          "heart_rate": heartRate,
+          "daily_steps": 4000,
+          "systolic_bp": 120,
+          "diastolic_bp": 80,
+        },
+      );
+
+      final prediction = response['data']['prediction'];
+      return right(prediction);
+    } on ServerException catch (e) {
+      return left(CustomFailure(message: e.errorModel.errorMessage));
+    } catch (e) {
+      log(e.toString());
+      return left(CustomFailure(message: 'حدث خطأ ما، حاول مرة أخرى'));
+    }
+  }
+
+  @override
+  Future<Either<Failure, Map<String, dynamic>>> getLatestSensorData() async {
+    try {
+      final response = await apiConsumer.get(
+        '/latest',
+        customBaseUrl: 'http://192.168.76.2:5000',
+      );
+
+      return right(response);
+    } on ServerException catch (e) {
+      return left(CustomFailure(message: e.errorModel.errorMessage));
+    } catch (e) {
+      return left(CustomFailure(message: 'حدث خطأ ما، حاول مرة أخرى'));
+    }
+  }
+  
+  @override
+  Future<Either<Failure, DoctorModel>> getDoctorProfile({required String doctorId})async {
+    try {
+      final token = getUserData().token;
+      final response = await apiConsumer.get(
+        ApiEndpoints.getUserData,
+        data: {
+          'userId': doctorId,
+        },headers: {
+          'Authorization': 'Bearer $token',
+        }
+      );
+      return right(DoctorModel.fromJson(response['data']));
     } on ServerException catch (e) {
       return left(CustomFailure(message: e.errorModel.errorMessage));
     } catch (e) {

@@ -15,7 +15,7 @@ class DoctorDescriptionCard extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'مستشارة اجتماعية وأسرية مع أكثر من 14 عامًا من الخبرة.',
+          doctor.doctorData?.description ?? '',
           maxLines: 2,
           overflow: TextOverflow.ellipsis,
           style: TextStyles.semiBold16.copyWith(color: Colors.grey[800]),

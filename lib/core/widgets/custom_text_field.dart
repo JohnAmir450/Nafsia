@@ -60,7 +60,7 @@ class CustomTextFormField extends StatelessWidget {
       keyboardType: textInputType ?? TextInputType.emailAddress,
       decoration: InputDecoration(
         hintMaxLines: maxLines,
-        
+      labelStyle: TextStyles.bold13.copyWith(color: const Color(0xff949D9E)),  
         labelText: labelText,
         contentPadding: contentPadding,
         suffixIcon: suffixIcon,

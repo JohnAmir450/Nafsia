@@ -20,7 +20,8 @@ class UpdateUserProfileButton extends StatelessWidget {
             ? AppColors.primaryColor
             : Colors.grey,
         text: 'حفظ',
-        onPressed: () {
+        onPressed: (){
+          
           cubit.hasChanges
               ? cubit.updateUserProfile(
                   name: cubit.updatedNameController.text ==

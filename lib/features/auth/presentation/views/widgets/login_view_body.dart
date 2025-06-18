@@ -98,12 +98,12 @@ class LoginViewBody extends StatelessWidget {
                     verticalSpace(16),
                     const DontHaveAnAccount(),
                     verticalSpace(30),
-                    const OrDivider(),
-                    verticalSpace(60),
-                    const LoginMethodItem(
-                      image: Assets.assetsImagesGoogleIcon,
-                      text: 'تسجيل الدخول بواسطة جوجل',
-                    ),
+                    // const OrDivider(),
+                    // verticalSpace(60),
+                    // const LoginMethodItem(
+                    //   image: Assets.assetsImagesGoogleIcon,
+                    //   text: 'تسجيل الدخول بواسطة جوجل',
+                    //),
                   ],
                 ),
               ),

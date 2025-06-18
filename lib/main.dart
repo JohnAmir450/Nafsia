@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -6,20 +7,36 @@ import 'package:hive_flutter/adapters.dart';
 import 'package:nafsia/core/helper_functions/cache_helper.dart';
 import 'package:nafsia/core/helper_functions/on_generate_routes.dart';
 import 'package:nafsia/core/helper_functions/rouutes.dart';
+import 'package:nafsia/core/models/notification_model.dart';
 import 'package:nafsia/core/services/get_it_service.dart';
+import 'package:nafsia/core/services/notification_service.dart';
 import 'package:nafsia/core/utils/app_colors.dart';
 import 'package:nafsia/core/utils/bloc_observer.dart';
 import 'package:nafsia/core/utils/chache_helper_keys.dart';
 import 'package:nafsia/core/utils/constants.dart';
 import 'package:nafsia/features/home/domain/models/mood_model.dart';
+import 'package:nafsia/firebase_options.dart';
 import 'package:nafsia/generated/l10n.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
+import 'package:zego_zimkit/zego_zimkit.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   Bloc.observer = MyBlocObserver();
   await CacheHelper.init();
   await Hive.initFlutter();
+  OneSignal.initialize(kOneSignalAppId);
+  OneSignal.Notifications.requestPermission(true);
+  await ZIMKit().init(
+    appID: zegoAppid,
+    appSign: zegoAppSign,
+    
+  );
+  Hive.registerAdapter(NotificationModelAdapter());
+await Hive.openBox<NotificationModel>(kNotificationsBox);
   Hive.registerAdapter(MoodModelAdapter());
+   NotificationService().setupNotificationListeners();
   setupGetIt();
   await Hive.openBox<MoodModel>(kMoodBox);
 
@@ -58,7 +75,7 @@ class MyApp extends StatelessWidget {
           GlobalCupertinoLocalizations.delegate,
         ],
         supportedLocales: S.delegate.supportedLocales,
-        locale: const Locale('ar'),
+         locale: const Locale('ar'),
         debugShowCheckedModeBanner: false,
         onGenerateRoute: onGenerateRoutes,
         initialRoute: CacheHelper.getData(key: kSaveUserDataKey) != null

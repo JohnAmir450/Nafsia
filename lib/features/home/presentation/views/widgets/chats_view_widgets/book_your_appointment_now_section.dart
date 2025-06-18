@@ -36,9 +36,9 @@ class BookYourAppointmentNowSection extends StatelessWidget {
                         physics: const BouncingScrollPhysics(),
                         scrollDirection: Axis.horizontal,
                         itemCount:
-                            state.doctors.length > 5 ? 6 : state.doctors.length,
+                            state.doctors.length > 5 ? 4 : state.doctors.length,
                         itemBuilder: (context, index) {
-                          if (index == 5) {
+                          if (index == state.doctors.length - 1) {
                             return const CustomShowMoreDoctorsWidgetCard();
                           }
                           return FeaturedDoctorChatsViewItem(

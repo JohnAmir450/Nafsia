@@ -16,6 +16,7 @@ import 'package:nafsia/features/home/presentation/views/main_view.dart';
 import 'package:nafsia/features/home/presentation/views/mode_selection_view.dart';
 import 'package:nafsia/features/home/presentation/views/my_private_sessions.dart';
 import 'package:nafsia/features/home/presentation/views/saved_posts_view.dart';
+import 'package:nafsia/features/home/presentation/views/stress_prediction_view.dart';
 import 'package:nafsia/features/home/presentation/views/user_profile_view.dart';
 
 import 'package:page_transition/page_transition.dart';
@@ -117,6 +118,11 @@ Route onGenerateRoutes(RouteSettings settings) {
       return PageTransition(
           duration: const Duration(milliseconds: 50),
           child: const MyPrivateSessionsView(),
+          type: PageTransitionType.fade);
+    case Routes.stressPredictionView:
+      return PageTransition(
+          duration: const Duration(milliseconds: 50),
+          child: const StressPredictionView(),
           type: PageTransitionType.fade);
     default:
       // var isLoggedIn = FirebaseAuthService().isLoggedIn();

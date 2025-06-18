@@ -40,6 +40,7 @@ class UserModel {
       'token': token,
     };
   }
+
   UserModel copyWith({
     UserDataModel? userDataModel,
     String? token,
@@ -49,7 +50,6 @@ class UserModel {
       token: token ?? this.token,
     );
   }
-  
 }
 
 class UserDataModel {
@@ -60,6 +60,7 @@ class UserDataModel {
   final String gender;
   final int age;
   final String role;
+
   bool? isVerified;
   DateTime? createdAt;
   DateTime? updatedAt;
@@ -87,8 +88,10 @@ class UserDataModel {
       phone: json['phone'],
       role: json['role'],
       isVerified: true,
-      createdAt: json['createdAt'] != null ? DateTime.parse(json['createdAt']) : null,
-      updatedAt: json['updatedAt'] != null ? DateTime.parse(json['updatedAt']) : null,
+      createdAt:
+          json['createdAt'] != null ? DateTime.parse(json['createdAt']) : null,
+      updatedAt:
+          json['updatedAt'] != null ? DateTime.parse(json['updatedAt']) : null,
     );
   }
 
@@ -106,6 +109,7 @@ class UserDataModel {
       'updatedAt': updatedAt?.toIso8601String(),
     };
   }
+
   UserDataModel copyWith({
     String? id,
     String? name,
@@ -117,7 +121,7 @@ class UserDataModel {
     bool? isVerified,
     DateTime? createdAt,
     DateTime? updatedAt,
-    String ? gender,
+    String? gender,
   }) {
     return UserDataModel(
       id: id ?? this.id,

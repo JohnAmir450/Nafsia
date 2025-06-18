@@ -95,4 +95,6 @@ class DoctorsCubit extends Cubit<DoctorsState> {
   void paymentStatusChanged(bool status) {
     emit(PaymentStatusChangedState(paymentDone: status));
   }
+
+  
 }

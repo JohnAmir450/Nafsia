@@ -1,6 +1,8 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:nafsia/core/helper_functions/get_user_data.dart';
+import 'package:nafsia/features/home/domain/models/doctor_model.dart';
 import 'package:nafsia/features/home/domain/models/posts_model.dart';
 import 'package:nafsia/features/home/domain/repos/home_repo.dart';
 
@@ -12,7 +14,10 @@ class HomeCubit extends Cubit<HomeState> {
   Map<String, String> isLiked = {};
   //late int postReactions ;
   Map<String, int> postReactions = {}; // key: postId, value: count
- 
+  final TextEditingController jobController = TextEditingController();
+  final TextEditingController sleepQualityController = TextEditingController();
+  final TextEditingController sleepDurationController = TextEditingController();
+  final formKey = GlobalKey<FormState>();
 
   Future<void> getAllPosts() async {
     emit(GetAllPostsLoadingState());
@@ -26,7 +31,6 @@ class HomeCubit extends Cubit<HomeState> {
         emit(GetAllPostsSuccessState(posts: posts));
       },
     );
-    
   }
 
   Future<void> reactPost(
@@ -84,16 +88,59 @@ class HomeCubit extends Cubit<HomeState> {
       emit(GetSavedPostsSuccessState(posts: posts));
     });
   }
+  Future<void>getDoctorProfile({required String doctorId})async
+{
+  emit(GetDoctorProfileLoadingState());
+  var result = await homeRepo.getDoctorProfile(doctorId: doctorId);
+  result.fold(
+      (failure) =>
+          emit(GetDoctorProfileFailureState(errorMessage: failure.message)),
+      (doctor) {
+    emit(GetDoctorProfileSuccessState(doctorModel: doctor));
+  });
+}
+  // Future<void>getLatestSensorData()async{
+  //   emit(GetLatestSensorDataLoadingState());
+  //   var result = await homeRepo.getLatestSensorData();
+  //   result.fold(
+  //       (failure) =>
+  //           emit(GetLatestSensorDataFailureState(errorMessage: failure.message)),
+  //       (data) {
+  //     emit(GetLatestSensorDataSuccessState(heartRate: data['heart_rate'],spo2: data['spo2']));
+  //   });
+  // }
 
-    Future<void> removePostFromSavedPosts({required String postId}) async {
-      final result = await homeRepo.removePostFromSavedPosts(postId: postId);
-      result.fold(
-        (failure) => emit(RemovePostFromSavedPostsFailureState(errorMessage: failure.message)),
-        (_) {
-          emit(RemovePostFromSavedPostsSuccessState());
-        },
-      );
-    }
+  Future<void> getStressPrediction(
+      {required String job,
+      required int sleepQuality,
+      required int sleepDuration}) async {
+    emit(GetStressPredictionLoadingState());
+    var result = await homeRepo.getStressPrediction(
+        job: job, sleepQuality: sleepQuality, sleepDuration: sleepDuration);
+    result.fold(
+        (failure) => emit(
+            GetStressPredictionFailureState(errorMessage: failure.message)),
+        (prediction) async{
+      final sensorData = await homeRepo.getLatestSensorData();
+        sensorData.fold(
+            (failure) =>
+                emit(GetStressPredictionFailureState(errorMessage: failure.message)),
+            (data)=> emit(GetStressPredictionSuccessState(prediction: prediction,heartRate: data['heart_rate'],spo2: data['spo2']))
+        );
+      
+    });
+  }
+
+  Future<void> removePostFromSavedPosts({required String postId}) async {
+    final result = await homeRepo.removePostFromSavedPosts(postId: postId);
+    result.fold(
+      (failure) => emit(
+          RemovePostFromSavedPostsFailureState(errorMessage: failure.message)),
+      (_) {
+        emit(RemovePostFromSavedPostsSuccessState());
+      },
+    );
+  }
 
   void checkIPostLiked(List<PostModel> posts) {
     final String currentUserId = getUserData().user.id;

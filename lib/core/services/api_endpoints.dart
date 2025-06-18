@@ -1,5 +1,6 @@
 class ApiEndpoints {
-  static const String baseUrl = 'https://nafsia.up.railway.app/api/v1/';
+  //https://nafsia.up.railway.app/api/v1/
+  static const String baseUrl = 'https://nafsia-v2.up.railway.app/api/v1/';
   static const String signUp = 'auth/register';
   static const String logIn = 'auth/login';
   static const String logout = 'auth/logout';
@@ -24,4 +25,6 @@ class ApiEndpoints {
    static const String getPrivateSessions = 'session';
   static const String participateInCommunitySession = 'session/community-session/';
   static const String getCommunitySessionMessages = 'message/';
+  static const String stressDetectionBaseUrl = 'https://stress.up.railway.app/';
+  static const String stressDetection = 'predict';
 }

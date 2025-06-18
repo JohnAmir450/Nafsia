@@ -3,13 +3,14 @@ class DoctorDataModel {
   final String? name;
   final String avatarUrl;
   final String? specialization;
-  //final String? description;
+  final String? description;
   final int? rate;
   final int? balance;
 
   DoctorDataModel({
     required this.id,
      this.name,
+     this.description,
     required this.avatarUrl,
     this.specialization,
     this.rate,
@@ -20,6 +21,7 @@ class DoctorDataModel {
     return DoctorDataModel(
       id: json['_id'],
       name: json['name']??'',
+      description: json['description']??'',
       avatarUrl: json['avatar'] is Map
           ? json['avatar']['secure_url'] ?? 'default.png'
           : json['avatar'] ?? 'default.png',

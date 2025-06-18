@@ -43,6 +43,22 @@ class CustomMoreViewListTileActions extends StatelessWidget {
           const Divider(),
           CustomMoreViewListTileItem(
             title: Text(
+              'قياس معدل التوتر',
+              style: TextStyles.bold16,
+            ),
+            leading: const Icon(
+              Icons.event_note_sharp,
+              color: AppColors.primaryColor,
+            ),
+            trailing: const Icon(
+              Icons.arrow_forward_ios,
+              color: AppColors.primaryColor,
+            ),
+            onTap: () => context.pushNamed(Routes.stressPredictionView),
+          ),
+          const Divider(),
+          CustomMoreViewListTileItem(
+            title: Text(
               'تغيير كلمة المرور',
               style: TextStyles.bold16,
             ),

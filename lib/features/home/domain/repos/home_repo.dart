@@ -40,4 +40,11 @@ abstract class HomeRepo {
       getCommunitySessionMessages({required String sessionId});
 
   Future<Either<Failure, List<SessionsModel>>> getBookedPrivateSessions();
+  Future<Either<Failure,int>> getStressPrediction({
+     required String job,
+    required int sleepQuality,
+    required int sleepDuration
+  });
+  Future<Either<Failure, Map<String, dynamic>>> getLatestSensorData();
+  Future<Either<Failure,DoctorModel>>getDoctorProfile({required String doctorId});
 }

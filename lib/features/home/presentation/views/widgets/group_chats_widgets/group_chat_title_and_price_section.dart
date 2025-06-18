@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:nafsia/core/helper_functions/extentions.dart';
+import 'package:nafsia/core/helper_functions/rouutes.dart';
 import 'package:nafsia/core/utils/app_colors.dart';
 import 'package:nafsia/core/utils/app_text_styles.dart';
 import 'package:nafsia/core/utils/spacing.dart';
@@ -23,11 +25,14 @@ class GroupChatTitleSection extends StatelessWidget {
         ),
         Row(
           children: [
-            CustomCachedNetworkImageWidget(
-              borderRadius: 16,
-              imageUrl: communitySessionsModel?.doctorData.avatarUrl,
-              height: 40,
-              width: 40,
+            GestureDetector(
+              onTap: () => context.pushNamed(Routes.doctorProfileView,arguments: communitySessionsModel?.doctorData),
+              child: CustomCachedNetworkImageWidget(
+                borderRadius: 16,
+                imageUrl: communitySessionsModel?.doctorData.avatarUrl,
+                height: 40,
+                width: 40,
+              ),
             ),
             horizontalSpace(8),
             Text(communitySessionsModel?.doctorData.name ?? '',

@@ -35,8 +35,10 @@ class CustomDropdownFormField extends StatelessWidget {
               }
           : null,
       onChanged: onChanged,
+      
       decoration: InputDecoration(
         hintText: hintText,
+        labelText: hintText,
         hintStyle:  TextStyles.bold13.copyWith(color: const Color(0xff949D9E)),
         contentPadding: contentPadding,
         filled: true,

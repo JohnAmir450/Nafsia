@@ -9,15 +9,14 @@ import 'package:nafsia/features/home/domain/models/posts_model.dart';
 
 class CustomPostItem extends StatelessWidget {
   final PostModel postModel;
+  final bool isVisible;
   const CustomPostItem({
     super.key,
     required this.postModel,
+    this.isVisible = true,
   });
-
   @override
   Widget build(BuildContext context) {
-    
-
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12),
       child: Container(
@@ -33,16 +32,25 @@ class CustomPostItem extends StatelessWidget {
             verticalSpace(12),
             Text(
               postModel.title,
-              style: TextStyles.bold16,),
-              verticalSpace(8),
-             Text(
+              style: TextStyles.bold16,
+            ),
+            verticalSpace(8),
+            Text(
               postModel.content,
               style: TextStyles.regular16,
             ),
             verticalSpace(16),
-            postModel.images.isEmpty ? Container() : CustomPostImage(imagePath: postModel.images.first.secureUrl,),
+            postModel.images.isEmpty
+                ? Container()
+                : CustomPostImage(
+                    imagePath: postModel.images.first.secureUrl,
+                  ),
             verticalSpace(12),
-             CustomPostActions(postModel: postModel,)
+            Visibility(
+                visible: isVisible,
+                child: CustomPostActions(
+                  postModel: postModel,
+                ))
           ],
         ),
       ),

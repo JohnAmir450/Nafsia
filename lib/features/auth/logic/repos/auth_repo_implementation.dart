@@ -41,7 +41,8 @@ class AuthRepoImplementation implements AuthRepo {
       final userModelData = UserModel.fromJson(response['data']);
 
       await saveUserData(userModelData);
-
+      
+      
       return right(null);
     } on ServerException catch (e) {
       return left(CustomFailure(message: e.errorModel.errorMessage));
@@ -63,7 +64,9 @@ class AuthRepoImplementation implements AuthRepo {
         },
       );
       final userModelData = UserModel.fromJson(response['data']);
+
       await saveUserData(userModelData);
+      
       return right(null);
     } on ServerException catch (e) {
       return left(CustomFailure(message: e.errorModel.errorMessage));
@@ -174,7 +177,7 @@ class AuthRepoImplementation implements AuthRepo {
 
   @override
   Future<Either<Failure, void>> changeUserPassword(
-      {required String oldPassword, required String newPassword})async {
+      {required String oldPassword, required String newPassword}) async {
     try {
       var token = getUserData().token;
       await apiConsumer.put(
@@ -195,23 +198,23 @@ class AuthRepoImplementation implements AuthRepo {
       return left(CustomFailure(message: 'حدث خطاء ما، حاول مرة اخرى'));
     }
   }
-  
+
   @override
-  Future<Either<Failure, void>> logout()async {
+  Future<Either<Failure, void>> logout() async {
     try {
-  var token = getUserData().token;
-    await apiConsumer.post(ApiEndpoints.logout, headers: {
-      'Authorization': 'Bearer $token',
-    });
-    await CacheHelper.removeData(key: kSaveUserDataKey);
-      
-    return right(null);
-} on ServerException catch (e) {
-  return left(CustomFailure(message: e.errorModel.errorMessage));
-} catch (e) {
-  log(e.toString());
-  return left(CustomFailure(message: 'حدث خطاء ما، حاول مرة اخرى'));
-}
+      var token = getUserData().token;
+      await apiConsumer.post(ApiEndpoints.logout, headers: {
+        'Authorization': 'Bearer $token',
+      });
+      await CacheHelper.removeData(key: kSaveUserDataKey);
+
+      return right(null);
+    } on ServerException catch (e) {
+      return left(CustomFailure(message: e.errorModel.errorMessage));
+    } catch (e) {
+      log(e.toString());
+      return left(CustomFailure(message: 'حدث خطاء ما، حاول مرة اخرى'));
+    }
   }
 }
  

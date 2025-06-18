@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nafsia/core/helper_functions/rouutes.dart';
 import 'package:nafsia/core/utils/spacing.dart';
 import 'package:nafsia/core/widgets/custom_cached_network_image.dart';
 import 'package:nafsia/features/home/domain/models/community_messages_model.dart';
@@ -20,12 +21,15 @@ class DoctorMessageBubble extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         // Doctor Image
-        CustomCachedNetworkImageWidget(
-          borderRadius: 16,
-          imageUrl: doctorDataModel.avatarUrl,
-          height: 50,
-          width: 50,
-          fit: BoxFit.fill,
+        GestureDetector(
+          onTap: () => Navigator.of(context).pushNamed(Routes.doctorProfileView,arguments: doctorDataModel),
+          child: CustomCachedNetworkImageWidget(
+            borderRadius: 16,
+            imageUrl: doctorDataModel.avatarUrl,
+            height: 50,
+            width: 50,
+            fit: BoxFit.fill,
+          ),
         ),
        horizontalSpace(8),
         // Message Content
