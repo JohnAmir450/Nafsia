@@ -3,6 +3,7 @@ import 'package:dartz/dartz.dart';
 import 'package:nafsia/core/errors/custom_exceptions.dart';
 import 'package:nafsia/core/errors/failures.dart';
 import 'package:nafsia/core/helper_functions/get_user_data.dart';
+import 'package:nafsia/core/models/measurment_model.dart';
 import 'package:nafsia/core/models/reveiew_model.dart';
 import 'package:nafsia/core/services/api_consumer.dart';
 import 'package:nafsia/core/services/api_endpoints.dart';
@@ -333,30 +334,44 @@ class HomeRepoImplementation extends HomeRepo {
     }
   }
 
-  @override
-  Future<Either<Failure, List<SessionsModel>>>
-      getBookedPrivateSessions() async {
-    try {
-      final token = getUserData().token;
-      final userId = getUserData().user.id;
-      final response = await apiConsumer.get(
-        queryParameters: {
-          'userId': userId,
-          'type': 'private',
-          'pageSize': 100,
-        },
-        ApiEndpoints.getPrivateSessions,
-        headers: {'Authorization': 'Bearer $token'},
-      );
-      final List<dynamic> data = response['data'];
-      return right(data.map((e) => SessionsModel.fromJson(e)).toList());
-    } on ServerException catch (e) {
-      return left(CustomFailure(message: e.errorModel.errorMessage));
-    } catch (e) {
-      log(e.toString());
-      return left(CustomFailure(message: 'حدث خطاء ما، حاول مرة اخرى'));
+ @override
+Future<Either<Failure, List<List<SessionsModel>>>> getBookedPrivateSessions() async {
+  try {
+    final token = getUserData().token;
+    final userId = getUserData().user.id;
+    final response = await apiConsumer.get(
+      queryParameters: {
+        'userId': userId,
+        'type': 'private',
+        'pageSize': 100,
+      },
+      ApiEndpoints.getPrivateSessions,
+      headers: {'Authorization': 'Bearer $token'},
+    );
+
+    final List<dynamic> data = response['data'];
+    final sessions = data.map((e) => SessionsModel.fromJson(e)).toList();
+
+    // 🔁 Group sessions by doctorId
+    final Map<String, List<SessionsModel>> grouped = {};
+    for (var session in sessions) {
+      final doctorId = session.doctorData.id; // adjust if needed
+      if (!grouped.containsKey(doctorId)) {
+        grouped[doctorId] = [];
+      }
+      grouped[doctorId]!.add(session);
     }
+
+    // 👇 Return list of session groups
+    return right(grouped.values.toList());
+  } on ServerException catch (e) {
+    return left(CustomFailure(message: e.errorModel.errorMessage));
+  } catch (e) {
+    log(e.toString());
+    return left(CustomFailure(message: 'حدث خطأ ما، حاول مرة أخرى'));
   }
+}
+
 
   @override
   Future<Either<Failure, int>> getStressPrediction({
@@ -410,7 +425,7 @@ class HomeRepoImplementation extends HomeRepo {
     try {
       final response = await apiConsumer.get(
         '/latest',
-        customBaseUrl: 'http://192.168.76.2:5000',
+        customBaseUrl: 'http://192.168.1.12:5000',
       );
 
       return right(response);
@@ -441,4 +456,80 @@ class HomeRepoImplementation extends HomeRepo {
       return left(CustomFailure(message: 'حدث خطاء ما، حاول مرة اخرى'));
     }
   }
+  
+  @override
+  Future<Either<Failure, void>> sessionComplete({required String sessionId}) async {
+    try {
+      final token = getUserData().token;
+      await apiConsumer.post(
+        'session/$sessionId/complete',
+        headers: {
+          'Authorization': 'Bearer $token',
+        }
+      );
+      return right(null);
+    } on ServerException catch (e) {
+      return left(CustomFailure(message: e.errorModel.errorMessage));
+    } catch (e) {
+      log(e.toString());
+      return left(CustomFailure(message: 'حدث خطاء ما، حاول مرة اخرى'));
+    }
+  }
+
+  @override
+  Future<Either<Failure, MeasurementModel>> saveMeasurement({required String occupation, required int sleepQuality,required int heartRate,required int stressLevel}) async{
+    try {
+      final user=getUserData().user;
+      final token = getUserData().token;
+      final response = await apiConsumer.post(
+        ApiEndpoints.stressMeasurement,
+        data: {
+          "gender": user.gender,
+          "age": user.age,
+          "occupation": occupation,
+          "sleep_duration": 8,
+          "sleep_quality": sleepQuality,
+          "bmi_category": "Normal",
+          "heart_rate": heartRate,
+          "daily_steps": 4000,
+          "systolic_bp": 120,
+          "diastolic_bp": 80,
+          "stress_level": stressLevel
+        },headers: {
+          'Authorization': 'Bearer $token',
+        }
+      );
+      return right(MeasurementModel.fromJson(response['data']));
+    } on ServerException catch (e) {
+      return left(CustomFailure(message: e.errorModel.errorMessage));
+    } catch (e) {
+      log(e.toString());
+      return left(CustomFailure(message: 'حدث خطاء ما، حاول مرة اخرى'));
+    }
+  }
+  
+  @override
+  Future<Either<Failure, void>> addReview({required String doctorId, required String review, required double rating})async {
+    try {
+      final token = getUserData().token;
+      await apiConsumer.post(
+        ApiEndpoints.addDoctorReview,
+        data: {
+          'doctorId': doctorId,
+          'comment': review,
+          'rating': rating,
+        },headers: {
+          'Authorization': 'Bearer $token',
+        }
+      );
+      return right(null);
+    } on ServerException catch (e) {
+      return left(CustomFailure(message: e.errorModel.errorMessage));
+    } catch (e) {
+      log(e.toString());
+      return left(CustomFailure(message: 'حدث خطاء ما، حاول مرة اخرى'));
+    }
+  }
+  
+  
 }

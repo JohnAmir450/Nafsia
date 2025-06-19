@@ -1,5 +1,6 @@
 import 'package:nafsia/core/errors/failures.dart';
 import 'package:dartz/dartz.dart';
+import 'package:nafsia/core/models/measurment_model.dart';
 
 abstract class AuthRepo {
   Future<Either<Failure, void>> signUp(
@@ -40,4 +41,6 @@ abstract class AuthRepo {
     required String newPassword,
   });
   Future<Either<Failure, void>> logout();
+     Future<Either<Failure, List<MeasurementModel>>> getUserMeasurements();
+
 }

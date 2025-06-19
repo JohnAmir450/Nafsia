@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
+import 'package:nafsia/core/models/measurment_model.dart';
 import 'package:nafsia/features/auth/logic/repos/auth_repo.dart';
 
 part 'more_state.dart';
@@ -52,5 +53,13 @@ class MoreCubit extends Cubit<MoreState> {
   void userMakeChanges() {
     hasChanges = true;
     emit(UserMakeChangesInProfile());
+  }
+ Future<void> getUserMeasurements()async {
+    emit(GetUserMeasurementsLoadingState());
+    var result = await authRepo.getUserMeasurements();
+    result.fold(
+        (failure) =>
+            emit(GetUserMeasurementsFailureState(errorMessage: failure.message)),
+        (measurements) => emit(GetUserMeasurementsSuccessState(measurements: measurements)));
   }
 }

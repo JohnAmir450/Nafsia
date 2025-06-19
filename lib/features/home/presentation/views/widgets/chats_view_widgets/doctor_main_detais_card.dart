@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nafsia/core/utils/app_text_styles.dart';
 import 'package:nafsia/core/utils/spacing.dart';
 import 'package:nafsia/core/widgets/custom_cached_network_image.dart';
@@ -34,22 +35,12 @@ class DoctorMainDetailsCard extends StatelessWidget {
                   style: TextStyles.bold19,
                 ),
               ),
-              Visibility(
-                visible: doctor.doctorData?.specialization != null,
-                child: Text(
-                  doctor.doctorData?.specialization ?? '',
-                  style:
-                      TextStyles.semiBold13.copyWith(color: Colors.grey[700]),
-                ),
+              Text(
+                doctor.doctorData?.specialization ?? '',
+                style:
+                    TextStyles.semiBold13.copyWith(color: Colors.grey[700]),
               ),
               verticalSpace(8),
-              FittedBox(
-                child: Text(
-                  doctor.doctorData?.description ?? '',
-                  style: TextStyles.semiBold13.copyWith(color: Colors.grey[700],),
-                  maxLines: 1,overflow: TextOverflow.ellipsis,
-                ),
-              ),
             ],
           ),
         ),

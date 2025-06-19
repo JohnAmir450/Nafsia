@@ -10,6 +10,10 @@ class Assets {
   /// assets/images/app_logo.svg
   static const String assetsImagesAppLogo = "assets/images/app_logo.svg";
 
+  /// Assets for assetsImagesAppSplash
+  /// assets/images/app_splash.jpg
+  static const String assetsImagesAppSplash = "assets/images/app_splash.jpg";
+
   /// Assets for assetsImagesChatsActive
   /// assets/images/chats_active.svg
   static const String assetsImagesChatsActive = "assets/images/chats_active.svg";
@@ -17,6 +21,10 @@ class Assets {
   /// Assets for assetsImagesChatsInactive
   /// assets/images/chats_inactive.svg
   static const String assetsImagesChatsInactive = "assets/images/chats_inactive.svg";
+
+  /// Assets for assetsImagesFemaleProfileImage
+  /// assets/images/female_profile_image.png
+  static const String assetsImagesFemaleProfileImage = "assets/images/female_profile_image.png";
 
   /// Assets for assetsImagesGoogleIcon
   /// assets/images/google_icon.svg
@@ -41,6 +49,10 @@ class Assets {
   /// Assets for assetsImagesHomeInactive
   /// assets/images/home_inactive.svg
   static const String assetsImagesHomeInactive = "assets/images/home_inactive.svg";
+
+  /// Assets for assetsImagesIcon
+  /// assets/images/icon.png
+  static const String assetsImagesIcon = "assets/images/icon.png";
 
   /// Assets for assetsImagesMoreActive
   /// assets/images/more_active.svg

@@ -1,3 +1,4 @@
+import 'package:device_preview/device_preview.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -33,6 +34,7 @@ void main() async {
     appSign: zegoAppSign,
     
   );
+  
   Hive.registerAdapter(NotificationModelAdapter());
 await Hive.openBox<NotificationModel>(kNotificationsBox);
   Hive.registerAdapter(MoodModelAdapter());
@@ -53,6 +55,8 @@ class MyApp extends StatelessWidget {
       designSize: const Size(360, 800),
       minTextAdapt: false,
       child: MaterialApp(
+        
+      
         builder: (context, child) {
           return MediaQuery(
             data: MediaQuery.of(context).copyWith(

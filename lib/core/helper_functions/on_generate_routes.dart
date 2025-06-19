@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:nafsia/core/helper_functions/cache_helper.dart';
 import 'package:nafsia/core/helper_functions/rouutes.dart';
+import 'package:nafsia/core/utils/chache_helper_keys.dart';
 import 'package:nafsia/features/auth/presentation/views/Verify_otp_view.dart';
 import 'package:nafsia/features/auth/presentation/views/forget_password_view.dart';
 import 'package:nafsia/features/auth/presentation/views/login_view.dart';
@@ -126,13 +128,11 @@ Route onGenerateRoutes(RouteSettings settings) {
           type: PageTransitionType.fade);
     default:
       // var isLoggedIn = FirebaseAuthService().isLoggedIn();
+      
+      var isLoggedIn = CacheHelper.getData(key: kSaveUserDataKey) != null;
       return PageTransition(
         duration: const Duration(milliseconds: 50),
-        child: Scaffold(
-          body: Center(
-            child: Text('No route defined for ${settings.name}'),
-          ),
-        ),
+        child: isLoggedIn ? const MainView() : const LoginView(),
         type: PageTransitionType.fade,
       );
   }

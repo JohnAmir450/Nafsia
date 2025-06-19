@@ -5,6 +5,7 @@ import 'package:nafsia/core/errors/custom_exceptions.dart';
 import 'package:nafsia/core/errors/failures.dart';
 import 'package:nafsia/core/helper_functions/cache_helper.dart';
 import 'package:nafsia/core/helper_functions/get_user_data.dart';
+import 'package:nafsia/core/models/measurment_model.dart';
 import 'package:nafsia/core/services/api_consumer.dart';
 import 'package:nafsia/core/services/api_endpoints.dart';
 import 'package:nafsia/core/utils/chache_helper_keys.dart';
@@ -215,6 +216,30 @@ class AuthRepoImplementation implements AuthRepo {
       log(e.toString());
       return left(CustomFailure(message: 'حدث خطاء ما، حاول مرة اخرى'));
     }
+  }
+  @override
+  Future<Either<Failure, List<MeasurementModel>>> getUserMeasurements()async {
+    try {
+      final token = getUserData().token;
+      final user=getUserData().user;
+      final response = await apiConsumer.get(
+        ApiEndpoints.stressMeasurement,
+        headers: {
+          'Authorization': 'Bearer $token',
+        },
+        queryParameters: {
+          'userId': user.id
+        },
+      );
+      final List<dynamic> data = response['data'];
+      return right(data.map((e) => MeasurementModel.fromJson(e)).toList());
+    } on ServerException catch (e) {
+      return left(CustomFailure(message: e.errorModel.errorMessage));
+    } catch (e) {
+      log(e.toString());
+      return left(CustomFailure(message: 'حدث خطاء ما، حاول مرة اخرى'));
+    }
+    
   }
 }
  

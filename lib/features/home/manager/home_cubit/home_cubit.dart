@@ -159,4 +159,18 @@ class HomeCubit extends Cubit<HomeState> {
       isLiked[postId] = isLikedByUser ? 'like' : '';
     }
   }
+   Future<void> saveMeasurement  ({required String occupation,required int sleepQuality,required int heartRate,required int stressLevel})async{
+    emit(SaveMeasurementLoadingState());
+    var result = await homeRepo.saveMeasurement(occupation: occupation, sleepQuality: sleepQuality,  heartRate: heartRate, stressLevel: stressLevel);
+    result.fold(
+        (failure) => emit(SaveMeasurementFailureState(errorMessage: failure.message)),
+        (success) => emit(SaveMeasurementSuccessState()));
+  } 
+  Future<void>addDoctorReview({required String doctorId,required String review,required double rating})async{
+    emit(AddReviewLoadingState());
+    var result = await homeRepo.addReview(doctorId: doctorId, review: review, rating: rating);
+    result.fold(
+        (failure) => emit(AddReviewFailureState(errorMessage: failure.message)),
+        (success) => emit(AddReviewSuccessState()));
+  }
 }

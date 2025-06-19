@@ -93,3 +93,24 @@ final class GetDoctorProfileSuccessState extends HomeState {
 }
 
 final class GetDoctorProfileLoadingState extends HomeState {}
+
+final class SaveMeasurementLoadingState extends HomeState {}
+
+final class SaveMeasurementSuccessState extends HomeState {}
+
+final class SaveMeasurementFailureState extends HomeState {
+  final String errorMessage;
+  SaveMeasurementFailureState({required this.errorMessage});
+}
+
+final class AddReviewLoadingState extends HomeState {}
+
+
+final class AddReviewFailureState extends HomeState {
+  final String errorMessage;
+  AddReviewFailureState({required this.errorMessage});
+}
+
+
+final class AddReviewSuccessState extends HomeState {}
+

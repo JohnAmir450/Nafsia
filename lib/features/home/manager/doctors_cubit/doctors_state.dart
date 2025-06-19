@@ -61,7 +61,7 @@ final class GetBookedPrivateSessionsLoadingState extends DoctorsState {}
 
 
 final class GetBookedPrivateSessionsSuccessState extends DoctorsState {
-  final List<SessionsModel> appointments;
+  final List<List<SessionsModel>> appointments;
 
   GetBookedPrivateSessionsSuccessState({required this.appointments});
 }

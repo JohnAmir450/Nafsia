@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:nafsia/core/errors/failures.dart';
+import 'package:nafsia/core/models/measurment_model.dart';
 import 'package:nafsia/core/models/reveiew_model.dart';
 import 'package:nafsia/features/home/domain/models/community_messages_model.dart';
 import 'package:nafsia/features/home/domain/models/doctor_appointment_model.dart';
@@ -39,12 +40,15 @@ abstract class HomeRepo {
   Future<Either<Failure, List<CommunityMessageModel>>>
       getCommunitySessionMessages({required String sessionId});
 
-  Future<Either<Failure, List<SessionsModel>>> getBookedPrivateSessions();
-  Future<Either<Failure,int>> getStressPrediction({
-     required String job,
-    required int sleepQuality,
-    required int sleepDuration
-  });
+  Future<Either<Failure, List<List<SessionsModel>>>> getBookedPrivateSessions();
+  Future<Either<Failure, int>> getStressPrediction(
+      {required String job,
+      required int sleepQuality,
+      required int sleepDuration});
   Future<Either<Failure, Map<String, dynamic>>> getLatestSensorData();
-  Future<Either<Failure,DoctorModel>>getDoctorProfile({required String doctorId});
+  Future<Either<Failure, DoctorModel>> getDoctorProfile(
+      {required String doctorId});
+  Future<Either<Failure, void>> sessionComplete({required String sessionId});
+   Future<Either<Failure, MeasurementModel>> saveMeasurement({required String occupation,required int sleepQuality,required int heartRate,required int stressLevel});
+   Future<Either<Failure, void>> addReview({required String doctorId,required String review,required double rating});
 }

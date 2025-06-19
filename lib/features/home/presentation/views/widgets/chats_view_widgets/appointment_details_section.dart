@@ -52,13 +52,21 @@ class AppointmentDetailsSection extends StatelessWidget {
             },
           ),
         ),
-        Row(
+        Column(
           children: [
-            Text('مدة الجلسة : ', style: TextStyles.bold16),
-            Text('${appointment.duration} دقيقة', style: TextStyles.semiBold16),
-            const Spacer(),
-            Text('سعر الجلسة : ', style: TextStyles.bold16),
-            Text('${appointment.price} جنيه', style: TextStyles.semiBold16),
+            Row(
+              children: [
+                Text('مدة الجلسة : ', style: TextStyles.bold16),
+                Text('${appointment.duration} دقيقة', style: TextStyles.semiBold16),
+              ],
+            ),
+            
+            Row(
+              children: [
+                Text('سعر الجلسة : ', style: TextStyles.bold16),
+                Text('${appointment.price} جنيه', style: TextStyles.semiBold16),
+              ],
+            ),
           ],
         ),
         verticalSpace(16),

@@ -19,47 +19,51 @@ class NotificationModalSheet extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       child: ValueListenableBuilder(
         valueListenable: box.listenable(),
-        builder: (context, Box<NotificationModel> box, _) {
-          if (box.isEmpty) {
-            return const Center(
-              child: Text(
-                "لا يوجد إشعارات حالياً",
-                style: TextStyle(fontSize: 16),
-              ),
-            );
-          }
+       builder: (context, Box<NotificationModel> box, _) {
+  if (box.isEmpty) {
+    return const Center(
+      child: Text(
+        "لا يوجد إشعارات حالياً",
+        style: TextStyle(fontSize: 16),
+      ),
+    );
+  }
 
-          return ListView.separated(
-            itemCount: box.length,
-            separatorBuilder: (_, __) => const Divider(),
-            itemBuilder: (context, index) {
-              final notification = box.getAt(index);
-              if (notification == null) return const SizedBox.shrink();
+  final reversedNotifications = box.values.toList().reversed.toList();
 
-              return Slidable(
-                endActionPane: ActionPane(
-                  motion: const StretchMotion(),
-                  children: [
-                    SlidableAction(
-                      onPressed: (_) => box.deleteAt(index),
-                      backgroundColor: Colors.red,
-                      icon: Icons.delete,
-                      label: 'حذف',
-                    ),
-                  ],
-                ),
-                child: ListTile(
-                  title: Text(notification.title, style: const TextStyle(fontWeight: FontWeight.bold)),
-                  subtitle: Text(notification.body),
-                  trailing: Text(
-                    timeago.format(notification.timestamp,locale: 'ar'),
-                    style: TextStyle(fontSize: 12, color: Colors.grey[600]),
-                  ),
-                ),
-              );
-            },
-          );
-        },
+  return ListView.separated(
+    itemCount: reversedNotifications.length,
+    separatorBuilder: (_, __) => const Divider(),
+    itemBuilder: (context, index) {
+      final notification = reversedNotifications[index];
+      return Slidable(
+        endActionPane: ActionPane(
+          motion: const StretchMotion(),
+          children: [
+            SlidableAction(
+              onPressed: (_) {
+                // 🗑️ Delete by key instead of index
+                final keyToDelete = box.keyAt(box.values.toList().indexOf(notification));
+                box.delete(keyToDelete);
+              },
+              backgroundColor: Colors.red,
+              icon: Icons.delete,
+              label: 'حذف',
+            ),
+          ],
+        ),
+        child: ListTile(
+          title: Text(notification.title, style: const TextStyle(fontWeight: FontWeight.bold)),
+          subtitle: Text(notification.body),
+          trailing: Text(
+            timeago.format(notification.timestamp, locale: 'ar'),
+            style: TextStyle(fontSize: 12, color: Colors.grey[600]),
+          ),
+        ),
+      );
+    },
+  );
+},
       ),
     );
   }

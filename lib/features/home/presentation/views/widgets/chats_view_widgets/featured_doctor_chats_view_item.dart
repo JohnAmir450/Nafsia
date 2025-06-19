@@ -17,14 +17,14 @@ class FeaturedDoctorChatsViewItem extends StatelessWidget {
     return GestureDetector(
       onTap: () => context.pushNamed(Routes.doctorProfileView,arguments: doctor),
       child: Container(
-        margin: const EdgeInsets.all(8),
+        margin: const EdgeInsets.all(4),
         constraints: BoxConstraints(
-          maxHeight: MediaQuery.of(context).size.height * 0.15,
-          maxWidth: MediaQuery.of(context).size.width * 0.6,
+          maxHeight: MediaQuery.of(context).size.height * 0.20,
+          maxWidth: MediaQuery.of(context).size.width * 0.8,
           minWidth: MediaQuery.of(context).size.width * 0.5,
         ),
         padding: EdgeInsets.all(
-            12), // Adaptive padding
+            8), // Adaptive padding
         decoration: customBoxDecoration(opacity: 0.08),
         child: DoctorMainDetailsCard(
           doctor: doctor,

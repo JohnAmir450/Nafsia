@@ -6,9 +6,11 @@ class GroupChatCardDetailsSection extends StatelessWidget {
   final String title;
   final String trailing;
   final IconData icon;
+  final Color? color;  
   const GroupChatCardDetailsSection({
     super.key,
     required this.title,
+    this.color,
     required this.trailing,
     required this.icon,
   });
@@ -20,7 +22,7 @@ class GroupChatCardDetailsSection extends StatelessWidget {
       title: Text(title, style: TextStyles.semiBold16),
       trailing: Text(
        trailing,
-        style: TextStyles.semiBold16,
+        style: TextStyles.semiBold16.copyWith(color:color ),
       ),
     );
   }

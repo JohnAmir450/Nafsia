@@ -21,10 +21,12 @@ class ApiEndpoints {
   static const String bookPrivateSessionAppointment = 'session/private-session';
   static const String searchDoctors = 'user/search';
   static const String getDoctorReviews = 'review';
+  static const String addDoctorReview = 'review';
   static const String getCommunitySessions = 'session';
    static const String getPrivateSessions = 'session';
   static const String participateInCommunitySession = 'session/community-session/';
   static const String getCommunitySessionMessages = 'message/';
   static const String stressDetectionBaseUrl = 'https://stress.up.railway.app/';
   static const String stressDetection = 'predict';
+  static const String stressMeasurement = 'measurement';
 }

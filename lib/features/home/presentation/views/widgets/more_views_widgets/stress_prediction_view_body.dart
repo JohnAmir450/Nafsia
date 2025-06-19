@@ -32,7 +32,6 @@ class StressPredictionViewBody extends StatelessWidget {
             children: [
               CustomTextFormField(
                 labelText: 'الوظيفة',
-                
                 controller: cubit.jobController,
                 onChanged: (value) {
                   cubit.jobController.text = value;
@@ -77,8 +76,9 @@ class StressPredictionViewBody extends StatelessWidget {
                     current is GetStressPredictionSuccessState ||
                     current is GetStressPredictionFailureState ||
                     current is GetStressPredictionLoadingState ,
-                listener: (context, state) {
-                  if (state is GetStressPredictionSuccessState) {
+                listener: (context, state) async {
+                  if (state is GetStressPredictionSuccessState){
+                    
                     customQuickAlertView(
                       context,
                       text: 'نسبة التوتر هي ${state.prediction}',
@@ -95,6 +95,12 @@ class StressPredictionViewBody extends StatelessWidget {
                       },
                       showCancelBtn: true,
                     );
+                    await cubit.saveMeasurement(
+                        occupation: cubit.jobController.text,
+                        sleepQuality: int.parse(cubit.sleepQualityController.text),
+                        
+                        heartRate: state.heartRate,
+                        stressLevel: state.prediction);
                   }
                   if (state is GetStressPredictionFailureState) {
                     showSnackBar(context,
@@ -137,7 +143,6 @@ class StressPredictionViewBody extends StatelessWidget {
                                     sleepQuality: int.parse(
                                         cubit.sleepQualityController.text),
                                   );
-                                  
                                 }
                               })
                     ],
@@ -169,8 +174,8 @@ class CustomContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: Container(
-        margin: const EdgeInsets.all(16),
-        padding: const EdgeInsets.all(16),
+        margin: const EdgeInsets.all(8),
+        padding: const EdgeInsets.all(4),
         decoration: customBoxDecoration(),
         child: Column(
           children: [
@@ -178,11 +183,11 @@ class CustomContainer extends StatelessWidget {
               leading: Icon(icon, color: color),
               title: Text(
                 text,
-                style: TextStyles.bold16.copyWith(color: color),
+                style: TextStyles.bold13.copyWith(color: color),
               ),
               subtitle: Text(
                 value,
-                style: TextStyles.bold16.copyWith(color: color),
+                style: TextStyles.bold13.copyWith(color: color),
               ),
             ),
           ],

@@ -31,3 +31,15 @@ final class LogOutFailureState extends MoreState {
   LogOutFailureState({required this.errorMessage});
 }
 final class LogOutSuccessState extends MoreState {}
+
+final class GetUserMeasurementsLoadingState extends MoreState {}
+
+final class GetUserMeasurementsSuccessState extends MoreState {
+  final List<MeasurementModel> measurements;
+  GetUserMeasurementsSuccessState({required this.measurements});
+}
+
+final class GetUserMeasurementsFailureState extends MoreState {
+  final String errorMessage;
+  GetUserMeasurementsFailureState({required this.errorMessage});
+}

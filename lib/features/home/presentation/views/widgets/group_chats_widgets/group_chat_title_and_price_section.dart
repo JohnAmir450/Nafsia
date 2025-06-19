@@ -43,8 +43,9 @@ class GroupChatTitleSection extends StatelessWidget {
                     '',
                 style: TextStyles.semiBold13.copyWith(color: Colors.grey)),
           ],
-        )
+        ),
       ],
+      
     );
   }
 }
